@@ -59,7 +59,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
     <div 
       className="relative w-full h-[600px] md:h-[700px] lg:h-[800px] bg-cover bg-center overflow-hidden"
       style={{
-        backgroundImage: 'url(https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1920&h=1000&fit=crop)',
+        backgroundImage: 'url(/images/landmark-81-banner.png)',
       }}
     >
       {/* Dark Overlay with vertical stripes pattern */}
