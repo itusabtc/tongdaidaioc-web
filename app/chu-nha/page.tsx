@@ -1,6 +1,7 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
 export const metadata = {
@@ -14,37 +15,31 @@ export default function ChuNhaPage() {
       title: 'Đăng tin bất động sản',
       description: 'Đăng tin nhanh chóng, dễ dàng với giao diện thân thiện',
       href: '/chu-nha/dang-tin',
-      icon: '📝',
     },
     {
       title: 'Quản lý tin đăng',
       description: 'Theo dõi và quản lý các tin đăng của bạn hiệu quả',
       href: '/chu-nha/quan-ly',
-      icon: '📊',
     },
     {
       title: 'Hỗ trợ bán nhà',
       description: 'Nhận tư vấn từ các chuyên gia bất động sản',
       href: '/chu-nha/ho-tro',
-      icon: '💡',
     },
     {
       title: 'Công cụ đánh giá',
       description: 'Tính giá bất động sân và phân tích thị trường',
       href: '/chu-nha/cong-cu',
-      icon: '🔧',
     },
     {
       title: 'Hỏi đáp',
       description: 'Giải đáp các thắc mắc về bán và cho thuê nhà',
       href: '/chu-nha/hoi-dap',
-      icon: '❓',
     },
     {
       title: 'Blog chủ nhà',
       description: 'Chia sẻ kinh nghiệm và mẹo vặt bất động sản',
       href: '/chu-nha/blog',
-      icon: '📚',
     },
   ];
 
@@ -74,7 +69,15 @@ export default function ChuNhaPage() {
                   href={feature.href}
                   className="group bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-accent transition-all"
                 >
-                  <div className="text-4xl mb-4">{feature.icon}</div>
+                  <div className="w-12 h-12 mb-4">
+                    <Image
+                      src="/icons/property-icon.png"
+                      alt="Property icon"
+                      width={48}
+                      height={48}
+                      className="w-full h-full"
+                    />
+                  </div>
                   <h3 className="text-lg font-bold text-primary mb-2 group-hover:text-accent transition">
                     {feature.title}
                   </h3>
