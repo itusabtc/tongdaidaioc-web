@@ -1,0 +1,85 @@
+@page "/"
+@using ReverBlazor.Components
+@using ReverBlazor.Models
+@using ReverBlazor.Services
+@inject IPropertyService PropertyService
+@inject IArticleService ArticleService
+
+<div class="pt-16">
+    <HeroSearch />
+    
+    <FeaturesSection />
+
+    <!-- Buy Properties Section -->
+    <PropertiesSection Title="Nhà đất bán mới nhất" Count="14,727" Properties="@BuyProperties" />
+
+    <!-- Divider -->
+    <div class="border-t border-gray-200"></div>
+
+    <!-- Rent Properties Section -->
+    <PropertiesSection Title="Nhà đất cho thuê mới nhất" Count="3,518" Properties="@RentProperties" />
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-red-50 to-red-100 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Có căn hộ hoặc đất cần bán?
+            </h2>
+            <p class="text-gray-700 text-lg mb-8">
+                Đăng tin bất động sản của bạn miễn phí trên Rever ngay hôm nay
+            </p>
+            <button class="px-8 py-4 bg-red-600 text-white font-bold text-lg rounded-lg hover:bg-red-700 transition">
+                Đăng tin ngay
+            </button>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <AppDownloadSection />
+
+    <!-- Recently Viewed Section -->
+    @if (RecentlyViewed != null && RecentlyViewed.Count > 0)
+    {
+        <RecentlyViewedSection Property="@RecentlyViewed[0]" />
+    }
+
+    <!-- News Section -->
+    <NewsSection Articles="@Articles" />
+
+    <!-- Location Browse Section -->
+    <LocationBrowseSection />
+</div>
+
+@code {
+    private List<Property> BuyProperties = new();
+    private List<Property> RentProperties = new();
+    private List<Property> RecentlyViewed = new();
+    private List<Article> Articles = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load properties
+        BuyProperties = await PropertyService.GetBuyPropertiesAsync();
+        RentProperties = await PropertyService.GetRentPropertiesAsync();
+
+        // Load articles
+        Articles = await ArticleService.GetArticlesAsync();
+
+        // Load recently viewed (placeholder)
+        RecentlyViewed = new List<Property>
+        {
+            new Property
+            {
+                Id = 1,
+                Title = "Căn hộ LUMIÈRE Boulevard",
+                Address = "A09199286 • Nguyễn Xiển, Long Thạnh Mỹ, Quận 9",
+                Price = 13,
+                PriceDisplay = "13 tr/tháng",
+                Area = 74,
+                Bedrooms = 2,
+                Bathrooms = 2,
+                ImageUrl = "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&h=400&fit=crop"
+            }
+        };
+    }
+}

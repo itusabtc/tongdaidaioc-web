@@ -1,0 +1,144 @@
+@using System.Collections.Generic
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <a href="/" class="flex items-center flex-shrink-0">
+                <div class="w-10 h-10 border-2 border-white rounded flex items-center justify-center text-white font-bold text-xl">
+                    R
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center gap-1 flex-1 ml-8">
+                @foreach (var item in MenuItems)
+                {
+                    <div class="relative group">
+                        <button 
+                            @onclick="@(() => ToggleDropdown(item.Key))"
+                            class="text-white hover:text-gray-200 font-medium py-4 px-3 flex items-center gap-1 transition text-sm">
+                            @item.Label
+                            <svg class="w-4 h-4 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                            </svg>
+                        </button>
+                        
+                        @if (ExpandedDropdown == item.Key)
+                        {
+                            <div class="absolute top-full left-0 mt-0 w-48 bg-gray-900 border border-gray-700 rounded shadow-lg py-2 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition">Option 1</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition">Option 2</a>
+                            </div>
+                        }
+                    </div>
+                }
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="#" class="text-white hover:text-gray-200 font-medium transition text-sm">
+                    Đăng nhập
+                </a>
+                <button class="px-6 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition text-sm">
+                    Kỳ gửi nhà đất
+                </button>
+                
+                <!-- Language Selector -->
+                <div class="relative">
+                    <button class="border border-gray-600 text-white px-4 py-2 rounded hover:border-gray-400 transition text-sm flex items-center gap-1">
+                        VI
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button 
+                class="lg:hidden text-white"
+                @onclick="ToggleMobileMenu">
+                @if (IsMobileMenuOpen)
+                {
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                }
+                else
+                {
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                }
+            </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        @if (IsMobileMenuOpen)
+        {
+            <nav class="lg:hidden border-t border-gray-700 py-4 bg-black/80">
+                <div class="flex flex-col space-y-2">
+                    @foreach (var item in MenuItems)
+                    {
+                        <div>
+                            <button
+                                @onclick="@(() => ToggleDropdown(item.Key))"
+                                class="w-full text-left text-gray-300 hover:text-white font-medium py-2 px-4 flex items-center justify-between transition">
+                                @item.Label
+                                <svg class="w-4 h-4 @(ExpandedDropdown == item.Key ? "rotate-180" : "")" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                            </button>
+                            @if (ExpandedDropdown == item.Key)
+                            {
+                                <div class="pl-4 py-2 space-y-1">
+                                    <a href="#" class="block text-sm text-gray-400 hover:text-white py-1">Option 1</a>
+                                    <a href="#" class="block text-sm text-gray-400 hover:text-white py-1">Option 2</a>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="pt-4 border-t border-gray-700 space-y-2">
+                        <a href="#" class="block text-gray-300 hover:text-white font-medium py-2">Đăng nhập</a>
+                        <button class="w-full px-4 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition">
+                            Kỳ gửi nhà đất
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        }
+    </div>
+</header>
+
+@code {
+    private bool IsMobileMenuOpen = false;
+    private string? ExpandedDropdown = null;
+
+    private List<MenuItem> MenuItems = new()
+    {
+        new MenuItem { Label = "Mua", Key = "mua" },
+        new MenuItem { Label = "Thuê", Key = "thue" },
+        new MenuItem { Label = "Dự án", Key = "duAn" },
+        new MenuItem { Label = "Chuyên viên", Key = "chuyen" },
+        new MenuItem { Label = "Trang tin", Key = "trang" },
+        new MenuItem { Label = "Có công", Key = "coDong" },
+        new MenuItem { Label = "Về Rever", Key = "veRever" },
+    };
+
+    private void ToggleMobileMenu()
+    {
+        IsMobileMenuOpen = !IsMobileMenuOpen;
+    }
+
+    private void ToggleDropdown(string key)
+    {
+        ExpandedDropdown = ExpandedDropdown == key ? null : key;
+    }
+
+    private class MenuItem
+    {
+        public string Label { get; set; } = string.Empty;
+        public string Key { get; set; } = string.Empty;
+    }
+}

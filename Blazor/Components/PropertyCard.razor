@@ -1,0 +1,87 @@
+@using ReverBlazor.Models
+
+<div class="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
+    <!-- Image Container -->
+    <div class="relative h-48 md:h-56 overflow-hidden bg-gray-200">
+        <img src="@Property.ImageUrl" 
+             alt="@Property.Title"
+             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+        
+        <!-- Badge Overlay -->
+        @if (Property.IsExclusive)
+        {
+            <div class="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                Độc quyền
+            </div>
+        }
+
+        @if (Property.Discount.HasValue)
+        {
+            <div class="absolute top-3 left-3 bg-white text-red-600 px-2 py-1 rounded text-xs font-bold">
+                -@Property.Discount%
+            </div>
+        }
+
+        <!-- Hover Overlay -->
+        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+            <span class="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                Xem chi tiết
+            </span>
+        </div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="p-4">
+        <!-- Price -->
+        <div class="mb-2">
+            <h3 class="text-lg md:text-xl font-bold text-red-600">
+                @Property.PriceDisplay
+            </h3>
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-sm md:text-base font-semibold text-gray-900 mb-2 line-clamp-2">
+            @Property.Title
+        </h2>
+
+        <!-- Details Grid -->
+        <div class="grid grid-cols-3 gap-2 mb-3 py-2 border-y border-gray-200">
+            <!-- Bedrooms -->
+            <div class="flex items-center gap-1 text-gray-600 text-xs">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 13h2v8H3zm4-8h2V3H7zm8-2v6h2V3zm0 12h2v5h-2z"></path>
+                </svg>
+                <span>@Property.Bedrooms</span>
+            </div>
+
+            <!-- Bathrooms -->
+            <div class="flex items-center gap-1 text-gray-600 text-xs">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 9.5c0 1.38-1.12 2.5-2.5 2.5S8.5 13.88 8.5 12.5 9.62 10 11 10s2.5 1.12 2.5 2.5z"></path>
+                </svg>
+                <span>@Property.Bathrooms</span>
+            </div>
+
+            <!-- Area -->
+            <div class="flex items-center gap-1 text-gray-600 text-xs">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                </svg>
+                <span>@Property.Area m²</span>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div class="flex items-start gap-1 text-gray-600 text-xs">
+            <svg class="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5z"></path>
+            </svg>
+            <span class="line-clamp-2">@Property.Address</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Property Property { get; set; } = new();
+}

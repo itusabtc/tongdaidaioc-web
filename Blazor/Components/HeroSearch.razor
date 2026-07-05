@@ -1,0 +1,114 @@
+@using System.Collections.Generic
+
+<div class="relative w-full h-[600px] md:h-[700px] lg:h-[800px] bg-cover bg-center overflow-hidden"
+     style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1920&h=1000&fit=crop');">
+    
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="absolute inset-0 opacity-20"
+         style="background-image: repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,.03) 2px, rgba(255,255,255,.03) 4px);"></div>
+
+    <!-- Right side vertical text -->
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center">
+        <div class="bg-gray-800/80 text-white px-4 py-12">
+            <span class="text-sm font-semibold whitespace-nowrap">Nhập các đất</span>
+        </div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="relative z-10 h-full flex flex-col justify-between pt-8 md:pt-12 pb-8 md:pb-12">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <!-- Headline Section -->
+            <div class="mb-8 md:mb-12">
+                <p class="text-white text-xs md:text-sm font-medium mb-3 flex items-center gap-2">
+                    <span class="inline-block w-2 h-2 bg-white rounded-full"></span>
+                    An tâm với 100% bất động sản xác thực tại Rever
+                </p>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight max-w-2xl">
+                    Lựa chọn căn nhà ưng ý của bạn
+                </h1>
+
+                <!-- Tabs -->
+                <div class="flex gap-8 mt-8">
+                    <button @onclick="() => SetActiveTab('buy')"
+                            class="pb-2 font-semibold text-base transition relative @(ActiveTab == "buy" ? "text-white border-b-2 border-red-600" : "text-gray-300 hover:text-white")">
+                        Mua nhà
+                    </button>
+                    <button @onclick="() => SetActiveTab('rent')"
+                            class="pb-2 font-semibold text-base transition relative @(ActiveTab == "rent" ? "text-white border-b-2 border-red-600" : "text-gray-300 hover:text-white")">
+                        Thuê nhà
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Box -->
+            <div class="bg-white rounded-md shadow-2xl p-0 overflow-hidden mb-6">
+                <!-- Search Input Row -->
+                <div class="flex items-center">
+                    <div class="flex-1 relative flex items-center">
+                        <svg class="absolute left-4 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="text" 
+                               @bind="SearchLocation"
+                               placeholder="Tìm kiếm nhà đất khu vực TP Hồ Chí Minh"
+                               class="w-full pl-12 pr-4 py-4 bg-white outline-none text-gray-800 placeholder-gray-500 text-sm md:text-base" />
+                    </div>
+                    <button class="px-6 md:px-8 py-4 bg-red-600 text-white font-bold hover:bg-red-700 transition whitespace-nowrap text-sm md:text-base">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+
+            <!-- Info and Quick Filters -->
+            <div>
+                <p class="text-white text-sm mb-3">
+                    Hiện có <span class="font-bold">177,207</span> nhà đất xác thực
+                </p>
+                
+                <!-- Quick Filter Pills -->
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-white text-sm font-medium">Gợi ý:</span>
+                    @foreach (var filter in FilterPills)
+                    {
+                        <div class="bg-transparent border border-white/40 rounded-full px-3 py-1.5 text-white text-sm font-medium hover:border-white/60 transition flex items-center gap-2 group cursor-pointer"
+                             @onclick="() => RemoveFilter(filter.Id)">
+                            <span>@filter.Label</span>
+                            <svg class="w-4 h-4 opacity-60 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string ActiveTab = "buy";
+    private string SearchLocation = "";
+    private List<FilterPill> FilterPills = new()
+    {
+        new FilterPill { Id = "1", Label = "The Global City" },
+        new FilterPill { Id = "2", Label = "Caraworld Cam Ranh" },
+        new FilterPill { Id = "3", Label = "Eaton Park" },
+        new FilterPill { Id = "4", Label = "LUMIÈRE Boulevard" }
+    };
+
+    private void SetActiveTab(string tab)
+    {
+        ActiveTab = tab;
+    }
+
+    private void RemoveFilter(string id)
+    {
+        FilterPills = FilterPills.Where(f => f.Id != id).ToList();
+    }
+
+    private class FilterPill
+    {
+        public string Id { get; set; } = string.Empty;
+        public string Label { get; set; } = string.Empty;
+    }
+}

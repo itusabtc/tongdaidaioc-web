@@ -1,0 +1,42 @@
+@using System.Globalization
+@using ReverBlazor.Components
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Rever - Nền tảng bất động sản trực tuyến hàng đầu Việt Nam. 177,207+ bất động sản xác thực, hỗ trợ 24/7, giá cả minh bạch." />
+    <meta property="og:title" content="Rever - Mua bán nhà đất xác thực" />
+    <meta property="og:description" content="Tìm kiếm và mua bán nhà đất, căn hộ, dự án bất động sản trên Rever." />
+    <meta property="og:locale" content="vi_VN" />
+    <title>Rever - Nền tảng bất động sán trực tuyến hàng đầu Việt Nam</title>
+    <base href="/" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/tailwind.css" rel="stylesheet" />
+</head>
+<body class="bg-white">
+    <div id="app">
+        <svg style="display: flex; justify-content: center; align-items: center; height: 100vh;" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20" stroke="#D32F2F" stroke-width="3" fill="none">
+                <animate attributeName="r" from="20" to="25" dur="1.5s" repeatCount="indefinite" />
+                <animate attributeName="opacity" from="1" to="0" dur="1.5s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="25" cy="25" r="15" stroke="#D32F2F" stroke-width="3" fill="none" />
+        </svg>
+    </div>
+
+    <div id="blazor-error-ui">
+        <environment include="Deployment">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser console for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">Dismiss</a>
+    </div>
+
+    <script src="_framework/blazor.webassembly.js"></script>
+</body>
+</html>

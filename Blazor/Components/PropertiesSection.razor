@@ -1,0 +1,86 @@
+@using ReverBlazor.Models
+@using System.Collections.Generic
+
+<section class="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">@Title</h2>
+            <p class="text-gray-600 text-sm">@Count nhà đất xác thực</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        @if (ShowFilterTabs)
+        {
+            <div class="flex flex-wrap gap-2 md:gap-4 mb-8 overflow-x-auto pb-2">
+                @foreach (var filter in FilterTabs)
+                {
+                    <button @onclick="() => SetActiveFilter(filter)"
+                            class="text-sm md:text-base font-medium whitespace-nowrap px-3 py-2 rounded-lg transition @(ActiveFilter == filter ? "text-red-600 bg-red-50 border border-red-600" : "text-gray-600 hover:text-gray-900")">
+                        @filter
+                    </button>
+                }
+            </div>
+        }
+
+        <!-- Properties Grid -->
+        @if (Properties != null && Properties.Count > 0)
+        {
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                @foreach (var property in Properties)
+                {
+                    <PropertyCard Property="@property" />
+                }
+            </div>
+
+            <!-- View More Link -->
+            <div class="mt-8 text-center">
+                <a href="#" class="text-teal-600 hover:text-teal-700 font-medium flex items-center justify-center gap-1">
+                    Xem tất cả
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-12">
+                <p class="text-gray-500">Không có dữ liệu</p>
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Nhà đất";
+
+    [Parameter]
+    public string Count { get; set; } = "0";
+
+    [Parameter]
+    public List<Property> Properties { get; set; } = new();
+
+    [Parameter]
+    public bool ShowFilterTabs { get; set; } = true;
+
+    private string ActiveFilter = "Tất cả";
+    private List<string> FilterTabs = new()
+    {
+        "Tất cả",
+        "Vinomes Grand Park",
+        "Masteri Thảo Điền",
+        "Vinomes Central Park",
+        "Quận 1",
+        "Quận 2",
+        "Quận 7",
+        "Quận 9"
+    };
+
+    private void SetActiveFilter(string filter)
+    {
+        ActiveFilter = filter;
+        // TODO: Filter properties based on selected filter
+    }
+}

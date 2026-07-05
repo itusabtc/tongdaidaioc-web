@@ -1,0 +1,20 @@
+@inherits LayoutComponentBase
+@using ReverBlazor.Components
+
+<div class="min-h-screen bg-white flex flex-col">
+    <Header />
+    
+    <main class="flex-grow">
+        @Body
+    </main>
+
+    <Footer />
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Initialize layout
+        base.OnInitialized();
+    }
+}

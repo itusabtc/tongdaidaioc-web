@@ -1,0 +1,93 @@
+@using System.Collections.Generic
+
+<section class="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            @foreach (var feature in Features)
+            {
+                <div class="text-center">
+                    <!-- Icon -->
+                    <div class="flex justify-center mb-4">
+                        <div class="w-16 h-16 flex items-center justify-center">
+                            @switch (feature.Icon)
+                            {
+                                case "verified":
+                                    <svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    break;
+                                case "trending":
+                                    <svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                    </svg>
+                                    break;
+                                case "support":
+                                    <svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1m2-1v2.5M8 7l-2 1m2-1l-2-1m2 1v2.5"></path>
+                                    </svg>
+                                    break;
+                                case "gift":
+                                    <svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    break;
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Title -->
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">@feature.Title</h3>
+                    
+                    <!-- Description -->
+                    <p class="text-gray-600 text-sm">@feature.Description</p>
+                </div>
+            }
+        </div>
+
+        <!-- Learn More Button -->
+        <div class="flex justify-center">
+            <a href="/vi-sao-chon-rever" 
+               class="px-8 py-3 border-2 border-gray-300 text-gray-900 font-semibold rounded-lg hover:border-red-600 hover:text-red-600 transition">
+                Tìm hiểu thêm
+            </a>
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<Feature> Features = new()
+    {
+        new Feature
+        {
+            Icon = "verified",
+            Title = "Cam kết xác thực",
+            Description = "100% bất động sản xác thực với hệ thống kiểm duyệt nghiêm ngặt"
+        },
+        new Feature
+        {
+            Icon = "trending",
+            Title = "Dẫn đầu số lượng",
+            Description = "177,207+ bất động sản được cập nhật liên tục hàng ngày"
+        },
+        new Feature
+        {
+            Icon = "support",
+            Title = "Trợn hỗ trợ, chi phí thấp",
+            Description = "Tư vấn miễn phí 24/7 và phí giao dịch cạnh tranh nhất"
+        },
+        new Feature
+        {
+            Icon = "gift",
+            Title = "Nhận nhiều ưu đãi",
+            Description = "Khuyến mãi và ưu đãi exclusive dành cho khách hàng thân thiết"
+        }
+    };
+
+    private class Feature
+    {
+        public string Icon { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+}
