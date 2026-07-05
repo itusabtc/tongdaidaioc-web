@@ -1,12 +1,15 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Be_Vietnam_Pro } from 'next/font/google'
 import './globals.css'
-import { OrganizationSchema, LocalBusinessSchema } from '@/components/json-ld'
+import { OrganizationSchema, LocalBusinessSchema, RealEstateListingSchema } from '@/components/json-ld'
+
+const beVietnamPro = Be_Vietnam_Pro({ subsets: ['latin', 'vietnamese'], weight: ['400', '500', '600', '700'] })
 
 export const metadata: Metadata = {
-  title: 'Tổng Đài Địa Ốc - Nền tảng bất động sán trực tuyến hàng đầu Việt Nam',
-  description: 'Tìm kiếm, mua bán, cho thuê nhà đất, căn hộ trên Tổng Đài Địa Ốc. 50,000+ tin đăng xác thực, công cụ dành cho môi giới, hỗ trợ 24/7.',
-  keywords: 'bất động sán, mua bán nhà, cho thuê căn hộ, dự án, Tổng Đài Địa Ốc, Vietnam',
+  title: 'Tổng Đài Địa Ốc - Nền tảng bất động sản trực tuyến hàng đầu Việt Nam',
+  description: 'Tìm kiếm, mua bán, cho thuê nhà đất, căn hộ trên Tổng Đài Địa Ốc. 12,340+ tin đăng xác thực, công cụ dành cho môi giới, hỗ trợ 24/7.',
+  keywords: 'bất động sán, mua bán nhà, cho thuê căn hộ, Tổng Đài Địa Ốc, Vietnam',
   authors: [{ name: 'Tổng Đài Địa Ốc' }],
   creator: 'Tổng Đài Địa Ốc',
   publisher: 'Tổng Đài Địa Ốc',
@@ -16,8 +19,8 @@ export const metadata: Metadata = {
     locale: 'vi_VN',
     url: 'https://tongdaidiaoc.vn',
     siteName: 'Tổng Đài Địa Ốc',
-    title: 'Tổng Đài Địa Ốc - Mua bán, cho thuê bất động sán',
-    description: 'Nền tảng bất động sán hàng đầu với 50,000+ tin đăng xác thực',
+    title: 'Tổng Đài Địa Ốc - Mua bán, cho thuê bất động sản',
+    description: 'Nền tảng bất động sản hàng đầu với 12,340+ tin đăng xác thực',
     images: [
       {
         url: '/og-image.jpg',
@@ -58,9 +61,6 @@ export const viewport: Viewport = {
     { media: '(prefers-color-scheme: light)', color: '#1E3A5F' },
     { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
   ],
-  width: 'device-width',
-  initialScale: 1,
-  userScalable: true,
 }
 
 export default function RootLayout({
@@ -69,17 +69,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi" className="scroll-smooth">
+    <html lang="vi" className="bg-white">
       <head>
         <OrganizationSchema />
         <LocalBusinessSchema />
+        <RealEstateListingSchema />
         <link rel="canonical" href="https://tongdaidiaoc.vn" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="vi_VN" />
       </head>
-      <body className="antialiased bg-white">
+      <body className={`${beVietnamPro.className} antialiased bg-white`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

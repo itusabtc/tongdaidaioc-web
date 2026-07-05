@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -50,7 +51,7 @@ export default function AccountPage() {
     { id: 'activity', label: 'Hoạt động', count: 24 },
   ];
 
-  const [activeTab, setActiveTab] = React.useState('listings');
+  const [activeTab, setActiveTab] = useState('listings');
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -174,7 +175,7 @@ export default function AccountPage() {
                             <button className="px-3 py-1 border border-primary text-primary rounded hover:bg-primary hover:text-white transition text-sm">
                               Chỉnh sửa
                             </button>
-                            <button className="px-3 py-1 border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition text-sm">
+                            <button className="px-3 py-1 border border-accent text-accent rounded hover:bg-accent hover:text-white transition text-sm">
                               Xóa
                             </button>
                           </div>

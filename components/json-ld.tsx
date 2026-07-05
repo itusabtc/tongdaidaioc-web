@@ -1,29 +1,23 @@
+import React from 'react';
+
 export function OrganizationSchema() {
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'RealEstateAgent',
+    '@type': 'Organization',
     name: 'Tổng Đài Địa Ốc',
     url: 'https://tongdaidiaoc.vn',
+    description: 'Nền tảng bất động sán trực tuyến hàng đầu Việt Nam',
     logo: 'https://tongdaidiaoc.vn/logo.png',
-    description:
-      'Nền tảng bất động sán trực tuyến hàng đầu Việt Nam, cung cấp dịch vụ mua bán, cho thuê bất động sán.',
     sameAs: [
       'https://www.facebook.com/tongdaidiaoc',
-      'https://twitter.com/tongdaidiaoc',
-      'https://www.linkedin.com/company/tongdaidiaoc',
+      'https://www.instagram.com/tongdaidiaoc',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'Customer Support',
-      telephone: '+84-1800-234-546',
+      telephone: '+84-24-6281-2999',
       email: 'support@tongdaidiaoc.vn',
-      hoursAvailable: 'Mo-Fr 08:00-18:00, Sa 08:00-12:00',
-    },
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'VN',
-      addressLocality: 'Hà Nội',
-      streetAddress: 'Số 1, Phố chính',
+      availableLanguage: ['vi'],
     },
   };
 
@@ -39,35 +33,24 @@ export function LocalBusinessSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: 'Tổng Đài Địa Ốc',
-    image: 'https://tongdaidiaoc.vn/og-image.jpg',
-    description:
-      'Nền tảng bất động sán số 1 Việt Nam với 50,000+ tin đăng xác thực',
+    name: 'Tổng Đài Địa Ốc - Mua bán nhà đất',
+    image: 'https://tongdaidiaoc.vn/logo.png',
+    description: 'Nền tảng mua bán và cho thuê nhà đất xác thực tại Việt Nam',
     url: 'https://tongdaidiaoc.vn',
-    telephone: '+84-1800-234-546',
-    priceRange: '100000000-10000000000',
+    telephone: '+84-24-6281-2999',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Hà Nội',
+      addressLocality: 'Hà Nội',
+      addressRegion: 'Hà Nội',
+      postalCode: '100000',
+      addressCountry: 'VN',
+    },
     areaServed: {
       '@type': 'Country',
-      name: 'Vietnam',
+      name: 'VN',
     },
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        opens: '08:00',
-        closes: '18:00',
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: 'Saturday',
-        opens: '08:00',
-        closes: '12:00',
-      },
-    ],
-    sameAs: [
-      'https://www.facebook.com/tongdaidiaoc',
-      'https://twitter.com/tongdaidiaoc',
-    ],
+    priceRange: '$$',
   };
 
   return (
@@ -82,171 +65,57 @@ export function RealEstateListingSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',
-    name: 'Tìm kiếm bất động sán - Tổng Đài Địa Ốc',
-    description: 'Tìm nhà đất, căn hộ, dự án để mua, bán, cho thuê',
+    name: 'Bất động sán mua bán và cho thuê tại Tổng Đài Địa Ốc',
+    description: '12,340+ bất động sán xác thực với thông tin chính xác',
     url: 'https://tongdaidiaoc.vn',
     image: 'https://tongdaidiaoc.vn/og-image.jpg',
-    priceRange: '100000000-10000000000',
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
-
-export function BreadcrumbSchema({
-  items,
-}: {
-  items: { name: string; url: string }[];
-}) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: item.url,
-    })),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
-
-export function ArticleSchema({
-  title,
-  description,
-  author,
-  datePublished,
-  dateModified,
-  image,
-}: {
-  title: string;
-  description: string;
-  author: string;
-  datePublished: string;
-  dateModified: string;
-  image: string;
-}) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: title,
-    description: description,
-    image: image,
-    datePublished: datePublished,
-    dateModified: dateModified,
-    author: {
-      '@type': 'Person',
-      name: author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Tổng Đài Địa Ốc',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://tongdaidiaoc.vn/logo.png',
-      },
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
-
-export function ProductSchema({
-  name,
-  description,
-  price,
-  currency = 'VND',
-}: {
-  name: string;
-  description: string;
-  price: number;
-  currency?: string;
-}) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: name,
-    description: description,
-    offers: {
-      '@type': 'Offer',
-      price: price,
-      priceCurrency: currency,
-      availability: 'https://schema.org/InStock',
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
-
-export function FAQSchema({
-  questions,
-}: {
-  questions: { question: string; answer: string }[];
-}) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: questions.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
-
-export function WebPageSchema({
-  title,
-  description,
-  url,
-  image,
-}: {
-  title: string;
-  description: string;
-  url: string;
-  image: string;
-}) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: title,
-    description: description,
-    url: url,
-    image: image,
-    isPartOf: {
-      '@type': 'WebSite',
+    priceCurrency: 'VND',
+    broker: {
+      '@type': 'RealEstateAgent',
       name: 'Tổng Đài Địa Ốc',
       url: 'https://tongdaidiaoc.vn',
     },
+    areaServed: 'VN',
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function FAQSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Tổng Đài Địa Ốc là gì?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Tổng Đài Địa Ốc là nền tảng bất động sán trực tuyến hàng đầu Việt Nam với 12,340+ tin đăng xác thực.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Làm thế nào để tìm nhà đất trên Tổng Đài Địa Ốc?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Bạn có thể sử dụng thanh tìm kiếm trên trang chủ để tìm kiếm theo địa điểm, giá cả, diện tích hoặc loại bất động sán.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Có phí sử dụng Tổng Đài Địa Ốc không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Không, việc tìm kiếm và xem bất động sán trên Tổng Đài Địa Ốc hoàn toàn miễn phí. Chỉ khi bạn muốn đăng tin bán hoặc cho thuê mới có phí.',
+        },
+      },
+    ],
   };
 
   return (
