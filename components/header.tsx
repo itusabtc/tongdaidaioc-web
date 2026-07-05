@@ -124,7 +124,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
             <Image
-              src="/images/tddo-logo.png"
+              src="/icons/property-icon.png"
               alt="TDDO Logo"
               width={48}
               height={48}
