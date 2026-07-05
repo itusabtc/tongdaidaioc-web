@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import AuthMenu from '@/components/auth/auth-menu';
 
 interface DropdownState {
   [key: string]: boolean;
@@ -10,15 +11,24 @@ interface DropdownState {
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [dropdowns, setDropdowns] = useState<DropdownState>({
     muaBan: false,
     choThue: false,
-    duAn: false,
     moiGioi: false,
     trangTin: false,
     chinhSach: false,
   });
   const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  // Scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -46,28 +56,18 @@ export default function Header() {
       label: 'Mua',
       key: 'muaBan',
       subItems: [
-        { label: 'Mua nhà riêng', href: '/mua-ban/nha-rieng' },
-        { label: 'Mua căn hộ', href: '/mua-ban/can-ho' },
-        { label: 'Mua đất', href: '/mua-ban/dat' },
-        { label: 'Mua dự án', href: '/mua-ban/du-an' },
+        { label: 'Mua nhà riêng', href: '/mua-ban' },
+        { label: 'Mua căn hộ', href: '/mua-ban' },
+        { label: 'Mua đất', href: '/mua-ban' },
       ],
     },
     {
       label: 'Thuê',
       key: 'choThue',
       subItems: [
-        { label: 'Cho thuê nhà', href: '/cho-thue/nha' },
-        { label: 'Cho thuê căn hộ', href: '/cho-thue/can-ho' },
-        { label: 'Cho thuê phòng', href: '/cho-thue/phong' },
-        { label: 'Cho thuê mặt bằng', href: '/cho-thue/mat-bang' },
-      ],
-    },
-    {
-      label: 'Dự án',
-      key: 'duAn',
-      subItems: [
-        { label: 'Dự án mới', href: '/du-an' },
-        { label: 'Dự án sắp ra mắt', href: '/du-an?status=coming' },
+        { label: 'Cho thuê nhà', href: '/cho-thue' },
+        { label: 'Cho thuê căn hộ', href: '/cho-thue' },
+        { label: 'Cho thuê phòng', href: '/cho-thue' },
       ],
     },
     {
@@ -76,17 +76,15 @@ export default function Header() {
       subItems: [
         { label: 'Các công cụ', href: '/moi-gioi/cong-cu' },
         { label: 'Hỗ trợ marketing', href: '/moi-gioi/marketing' },
-        { label: 'Hướng dẫn sử dụng', href: '/moi-gioi/huong-dan' },
-        { label: 'Cộng đồng môi giới', href: '/moi-gioi/community' },
+        { label: 'Cộng đồng', href: '/moi-gioi/community' },
       ],
     },
     {
-      label: 'Trang tin',
+      label: 'Tin tức',
       key: 'trangTin',
       subItems: [
-        { label: 'Bài viết mới', href: '/tin' },
-        { label: 'Hướng dẫn mua nhà', href: '/tin?category=huong-dan' },
-        { label: 'Tin thị trường', href: '/tin?category=thi-truong' },
+        { label: 'Bài viết mới', href: '/tin-tuc' },
+        { label: 'Hướng dẫn mua nhà', href: '/tin-tuc' },
       ],
     },
     {
@@ -95,18 +93,23 @@ export default function Header() {
       subItems: [
         { label: 'Điều khoản dịch vụ', href: '/chinh-sach/dieu-khoan' },
         { label: 'Chính sách bảo mật', href: '/chinh-sach/bao-mat' },
-        { label: 'Liên hệ hỗ trợ', href: '/lien-he' },
+        { label: 'Liên hệ', href: '/lien-he' },
       ],
     },
   ];
 
+  const bgClass = isScrolled ? 'bg-white shadow-md' : 'bg-transparent';
+  const textClass = isScrolled ? 'text-gray-900' : 'text-white';
+  const logoColorClass = isScrolled ? 'text-primary' : 'text-white';
+  const hoverClass = isScrolled ? 'hover:text-primary' : 'hover:text-accent';
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-primary backdrop-blur-sm border-b border-gray-200">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${bgClass}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
-            <div className="text-white font-bold text-2xl">TDDO</div>
+            <div className={`font-bold text-2xl ${logoColorClass}`}>TDDO</div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -121,7 +124,7 @@ export default function Header() {
               >
                 <button
                   onClick={() => toggleDropdown(item.key)}
-                  className="text-white hover:text-accent font-medium py-4 px-3 flex items-center gap-1 transition text-sm"
+                  className={`${textClass} ${hoverClass} font-medium py-4 px-3 flex items-center gap-1 transition text-sm`}
                 >
                   {item.label}
                   <ChevronDown size={16} className="opacity-60" />
@@ -146,29 +149,13 @@ export default function Header() {
           </nav>
 
           {/* Right Actions */}
-          <div className="hidden lg:flex items-center gap-3">
-            <Link
-              href="/dang-nhap"
-              className="text-white hover:text-gray-100 font-medium transition text-sm"
-            >
-              Đăng nhập
-            </Link>
-            <button className="px-6 py-2 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition text-sm">
-              Đăng tin miễn phí
-            </button>
-
-            {/* Language Selector */}
-            <div className="relative">
-              <button className="border border-gray-300 text-white px-3 py-1.5 rounded hover:border-white transition text-xs flex items-center gap-1">
-                VI
-                <ChevronDown size={14} />
-              </button>
-            </div>
+          <div className="hidden lg:flex items-center gap-4">
+            <AuthMenu />
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-white"
+            className={`lg:hidden ${textClass}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -178,13 +165,13 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="lg:hidden border-t border-gray-200 py-4 bg-primary">
+          <nav className={`lg:hidden border-t ${isScrolled ? 'border-gray-200' : 'border-white/20'} py-4 ${isScrolled ? 'bg-white' : 'bg-primary'}`}>
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <div key={item.key}>
                   <button
                     onClick={() => toggleDropdown(item.key)}
-                    className="w-full text-left text-white hover:text-accent font-medium py-2 px-4 flex items-center justify-between transition"
+                    className={`w-full text-left ${textClass} font-medium py-2 px-4 flex items-center justify-between transition`}
                   >
                     {item.label}
                     <ChevronDown size={16} className={`transition ${dropdowns[item.key] ? 'rotate-180' : ''}`} />
@@ -195,7 +182,7 @@ export default function Header() {
                         <Link
                           key={idx}
                           href={subItem.href}
-                          className="block text-sm text-gray-200 hover:text-accent py-1"
+                          className={`block text-sm py-1 ${isScrolled ? 'text-gray-700 hover:text-accent' : 'text-gray-200 hover:text-accent'}`}
                         >
                           {subItem.label}
                         </Link>
@@ -204,13 +191,8 @@ export default function Header() {
                   )}
                 </div>
               ))}
-              <div className="pt-4 border-t border-gray-400 space-y-2">
-                <Link href="/dang-nhap" className="block text-white hover:text-accent font-medium py-2">
-                  Đăng nhập
-                </Link>
-                <button className="w-full px-4 py-2 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition">
-                  Đăng tin miễn phí
-                </button>
+              <div className={`pt-4 ${isScrolled ? 'border-gray-200' : 'border-gray-400'} border-t space-y-2`}>
+                <AuthMenu />
               </div>
             </div>
           </nav>

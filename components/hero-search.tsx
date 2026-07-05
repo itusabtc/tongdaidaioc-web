@@ -2,6 +2,7 @@
 
 import { Search, MapPin, X } from 'lucide-react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface QuickFilter {
   id: string;
@@ -13,6 +14,7 @@ interface HeroSearchProps {
 }
 
 export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('buy');
   const [location, setLocation] = useState('');
   const [filters, setFilters] = useState<QuickFilter[]>([
@@ -24,6 +26,26 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
 
   const removeFilter = (id: string) => {
     setFilters(filters.filter(f => f.id !== id));
+  };
+
+  const handleSearch = () => {
+    const searchParams = new URLSearchParams();
+    if (location) searchParams.set('kw', location);
+    searchParams.set('type', activeTab === 'buy' ? 'sale' : 'rent');
+    router.push(`/tim-kiem?${searchParams.toString()}`);
+  };
+
+  const handleChipClick = (chip: QuickFilter) => {
+    const searchParams = new URLSearchParams();
+    searchParams.set('district', chip.label.toLowerCase().replace('quận', 'quan-').replace('thủ đức', 'thu-duc').replace(' ', '-'));
+    searchParams.set('type', activeTab === 'buy' ? 'sale' : 'rent');
+    router.push(`/tim-kiem?${searchParams.toString()}`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+      handleSearch();
+    }
   };
 
   return (
@@ -91,10 +113,14 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
                   placeholder="Tìm kiếm nhà đất khu vực TP Hồ Chí Minh"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   className="w-full pl-12 pr-4 py-4 bg-white outline-none text-gray-800 placeholder-gray-500 text-sm md:text-base"
                 />
               </div>
-              <button className="px-6 md:px-8 py-4 bg-[#F2922E] text-white font-bold hover:bg-[#e07d1f] transition whitespace-nowrap text-sm md:text-base">
+              <button 
+                onClick={handleSearch}
+                className="px-6 md:px-8 py-4 bg-[#F2922E] text-white font-bold hover:bg-[#e07d1f] transition whitespace-nowrap text-sm md:text-base"
+              >
                 Tìm kiếm
               </button>
             </div>
@@ -110,18 +136,13 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
             <div className="flex flex-wrap gap-2">
               <span className="text-white text-sm font-medium">Gợi ý:</span>
               {filters.map((filter) => (
-                <div
+                <button
                   key={filter.id}
+                  onClick={() => handleChipClick(filter)}
                   className="bg-transparent border border-white/40 rounded-full px-3 py-1.5 text-white text-sm font-medium hover:border-white/60 transition flex items-center gap-2 group"
                 >
                   <span>{filter.label}</span>
-                  <button
-                    onClick={() => removeFilter(filter.id)}
-                    className="opacity-60 group-hover:opacity-100 transition"
-                  >
-                    <X size={14} />
-                  </button>
-                </div>
+                </button>
               ))}
             </div>
           </div>
