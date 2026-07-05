@@ -7,6 +7,7 @@ import Footer from '@/components/footer';
 import BackToTop from '@/components/back-to-top';
 import LatestListingsSection from '@/components/listings/latest-listings-section';
 import FeaturedBrokersSection from '@/components/brokers/featured-brokers-section';
+import ToolsAndMortgageSection from '@/components/home/tools-and-mortgage-section';
 import { getStats, getListings } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 import { featuredBrokers } from '@/lib/mock/featured-brokers';
@@ -73,6 +74,9 @@ async function HomePageContent() {
 
         {/* Featured Brokers Section */}
         <FeaturedBrokersSection brokers={featuredBrokers} />
+
+        {/* Tools and Mortgage Section */}
+        <ToolsAndMortgageSection />
 
         {/* Post Instructions Section - 3 Steps */}
         <section className="py-10 md:py-14 px-4 sm:px-6 lg:px-8 bg-gray-50">
