@@ -8,17 +8,18 @@ import { getListing, getSimilar } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   try {
-    const listing = await getListing(params.slug);
+    const listing = await getListing(slug);
     return {
       title: `${listing.title} - Tổng Đài Địa Ốc`,
       description: `${listing.title}. ${listing.area}m², giá ${listing.priceText}. ${listing.districtName}`,
@@ -31,7 +32,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     };
   } catch {
-    const listing = mockListings.find(l => l.slug === params.slug);
+    const { slug } = await params;
+    const listing = mockListings.find(l => l.slug === slug);
     if (!listing) return { title: 'Tin không tìm thấy' };
     return {
       title: `${listing.title} - Tổng Đài Địa Ốc`,
@@ -41,13 +43,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ListingPage({ params }: Props) {
+  const { slug } = await params;
   let listing: any = null;
   let similar: any[] = [];
 
   try {
-    listing = await getListing(params.slug);
+    listing = await getListing(slug);
     try {
-      similar = await getSimilar(params.slug, 6);
+      similar = await getSimilar(slug, 6);
     } catch (err) {
       similar = [];
     }

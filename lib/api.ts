@@ -140,8 +140,9 @@ export async function getListing(slug: string): Promise<ListingDetail> {
   return apiFetch<ListingDetail>(`/listings/${slug}`);
 }
 
-export async function getSimilar(slug: string): Promise<ListingCard[]> {
-  return apiFetch<ListingCard[]>(`/listings/${slug}/similar`);
+export async function getSimilar(slug: string, take?: number): Promise<ListingCard[]> {
+  const query = take ? `?take=${take}` : '';
+  return apiFetch<ListingCard[]>(`/listings/${slug}/similar${query}`);
 }
 
 // Authentication
