@@ -4,15 +4,32 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { login, ApiError } from '@/lib/api';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get('returnUrl') || '/';
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log('Login:', { email, password });
-  };
+    setError('');
+    setLoading(true);
+
+    try {
+      await login(email, password);
+      router.push(returnUrl);
+    } catch (err: any) {
+      setError(err.message || 'Đăng nhập thất bại. Vui lòng kiểm tra email và mật khẩu.');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <main className="min-h-screen bg-white">
@@ -23,6 +40,12 @@ export default function LoginPage() {
             <div className="bg-white border border-gray-200 rounded-lg p-8">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Đăng nhập</h1>
               <p className="text-gray-600 mb-8">Nhập email và mật khẩu của bạn</p>
+
+              {error && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -57,9 +80,10 @@ export default function LoginPage() {
 
                 <button
                   type="submit"
-                  className="w-full px-4 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition"
+                  disabled={loading}
+                  className="w-full px-4 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Đăng nhập
+                  {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                 </button>
               </form>
 

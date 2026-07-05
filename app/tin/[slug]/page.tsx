@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { getListing } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 
 interface Props {
@@ -10,33 +11,45 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const listing = mockListings.find(l => l.slug === params.slug);
-  
-  if (!listing) {
-    return { title: 'Tin không tìm thấy' };
+  try {
+    const listing = await getListing(params.slug);
+    return {
+      title: `${listing.title} - Tổng Đài Địa Ốc`,
+      description: `${listing.title}. ${listing.area}m², giá ${listing.priceText}. ${listing.districtName}`,
+      canonical: `https://tongdaidiaoc.vn/tin/${listing.slug}`,
+      openGraph: {
+        type: 'website',
+        title: listing.title,
+        description: `${listing.propertyTypeName} tại ${listing.districtName}`,
+        images: [listing.coverUrl || ''],
+      },
+    };
+  } catch {
+    // Fallback to mock
+    const listing = mockListings.find(l => l.slug === params.slug);
+    if (!listing) return { title: 'Tin không tìm thấy' };
+    
+    return {
+      title: `${listing.title} - Tổng Đài Địa Ốc`,
+      description: `${listing.title}. ${listing.area}m², giá ${listing.priceText}. ${listing.districtName}`,
+    };
   }
-
-  return {
-    title: `${listing.title} - Tổng Đài Địa Ốc`,
-    description: `${listing.title}. ${listing.area}m², giá ${listing.priceText}. ${listing.districtName}`,
-    canonical: `https://tongdaidiaoc.vn/tin/${listing.slug}`,
-    openGraph: {
-      type: 'website',
-      title: listing.title,
-      description: `${listing.propertyTypeName} tại ${listing.districtName}`,
-      images: [listing.coverUrl || ''],
-    },
-  };
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return mockListings.map(listing => ({
     slug: listing.slug,
   }));
 }
 
-export default function ListingPage({ params }: Props) {
-  const listing = mockListings.find(l => l.slug === params.slug);
+export default async function ListingPage({ params }: Props) {
+  let listing = null;
+  
+  try {
+    listing = await getListing(params.slug);
+  } catch {
+    listing = mockListings.find(l => l.slug === params.slug);
+  }
 
   if (!listing) {
     return (

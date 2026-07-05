@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { getListings } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 
 export const metadata: Metadata = {
@@ -9,9 +10,19 @@ export const metadata: Metadata = {
   canonical: 'https://tongdaidiaoc.vn/mua-ban',
 };
 
-const saleListings = mockListings.filter(l => l.listingType === 'sale');
+async function getSaleListings() {
+  try {
+    const result = await getListings({ type: 'sale', pageSize: 24 });
+    return result.items;
+  } catch (error) {
+    console.error('Failed to fetch sale listings, using mock data');
+    return mockListings.filter(l => l.listingType === 'sale');
+  }
+}
 
-export default function BuySellPage() {
+export default async function BuySellPage() {
+  const saleListings = await getSaleListings();
+
   return (
     <main className="min-h-screen bg-white">
       <Header />
