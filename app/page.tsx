@@ -3,6 +3,7 @@ import HeroSearch from '@/components/hero-search';
 import FeaturesSection from '@/components/features-section';
 import NewsSection from '@/components/news-section';
 import LocationBrowseSection from '@/components/location-browse-section';
+import LocationLinksSection from '@/components/location-links-section';
 import Footer from '@/components/footer';
 import LatestListingsSection from '@/components/listings/latest-listings-section';
 import FeaturedBrokersSection from '@/components/brokers/featured-brokers-section';
@@ -74,7 +75,7 @@ async function HomePageContent() {
         <FeaturedBrokersSection brokers={featuredBrokers} />
 
         {/* Post Instructions Section - 3 Steps */}
-        <section className="section-spacing bg-gray-50">
+        <section className="py-10 md:py-14 px-4 sm:px-6 lg:px-8 bg-gray-50">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
               Chủ nhà đăng tin siêu dễ
@@ -107,8 +108,11 @@ async function HomePageContent() {
           </div>
         </section>
 
+        {/* Location Links Section */}
+        <LocationLinksSection />
+
         {/* Broker Section */}
-        <section className="section-spacing">
+        <section className="py-10 md:py-14 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
               Dành cho Môi giới

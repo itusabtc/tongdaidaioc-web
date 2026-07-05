@@ -21,7 +21,7 @@ export default function LatestListingsSection({
   }
 
   return (
-    <section className={`py-16 md:py-20 ${className}`}>
+    <section className={`py-10 md:py-14 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-10">

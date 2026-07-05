@@ -21,7 +21,7 @@ export default function FeaturedBrokersSection({ brokers }: FeaturedBrokersSecti
   }
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-br from-blue-50 to-orange-50">
+    <section className="py-10 md:py-14 bg-gradient-to-br from-blue-50 to-orange-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-10">
