@@ -16,6 +16,7 @@ export default function Header() {
   const [dropdowns, setDropdowns] = useState<DropdownState>({
     muaBan: false,
     choThue: false,
+    chuNha: false,
     moiGioi: false,
     trangTin: false,
     chinhSach: false,
@@ -69,6 +70,18 @@ export default function Header() {
         { label: 'Cho thuê nhà', href: '/cho-thue' },
         { label: 'Cho thuê căn hộ', href: '/cho-thue' },
         { label: 'Cho thuê phòng', href: '/cho-thue' },
+      ],
+    },
+    {
+      label: 'Dành cho chủ nhà',
+      key: 'chuNha',
+      subItems: [
+        { label: 'Đăng tin bất động sản', href: '/chu-nha/dang-tin' },
+        { label: 'Quản lý tin đăng', href: '/chu-nha/quan-ly' },
+        { label: 'Hỗ trợ bán nhà', href: '/chu-nha/ho-tro' },
+        { label: 'Công cụ đánh giá', href: '/chu-nha/cong-cu' },
+        { label: 'Hỏi đáp', href: '/chu-nha/hoi-dap' },
+        { label: 'Blog chủ nhà', href: '/chu-nha/blog' },
       ],
     },
     {
