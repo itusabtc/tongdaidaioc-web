@@ -1,3 +1,7 @@
+// Re-export from API client for backward compatibility
+export type { ListingCard, ListingDetail, PagedListings } from '@/lib/api';
+
+// Legacy interface for reference (use API types instead)
 export interface Listing {
   id: string;
   title: string;

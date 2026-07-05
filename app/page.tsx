@@ -5,14 +5,36 @@ import PropertiesSection from '@/components/properties-section';
 import NewsSection from '@/components/news-section';
 import LocationBrowseSection from '@/components/location-browse-section';
 import Footer from '@/components/footer';
+import { getStats, getListings } from '@/lib/api';
 import { buyProperties, rentProperties } from '@/lib/property-data';
 
-export default function Page() {
+async function HomePageContent() {
+  // Try to fetch from API, fallback to mock data
+  let statsCount = '12,340';
+  let saleListings = buyProperties;
+  let rentListings = rentProperties;
+
+  try {
+    const stats = await getStats();
+    statsCount = stats.activeListingCount.toLocaleString('vi-VN');
+  } catch (error) {
+    console.error('Failed to fetch stats, using mock data');
+  }
+
+  try {
+    const saleData = await getListings({ type: 'sale', pageSize: 8 });
+    if (saleData.items.length > 0) {
+      saleListings = saleData.items;
+    }
+  } catch (error) {
+    console.error('Failed to fetch sale listings, using mock data');
+  }
+
   return (
     <main className="min-h-screen bg-white">
       <Header />
       <div className="pt-16">
-        <HeroSearch />
+        <HeroSearch statsCount={statsCount} />
         
         {/* Features Section */}
         <FeaturesSection />
@@ -34,15 +56,15 @@ export default function Page() {
               </button>
             </div>
 
-            {/* Grid 8 cards (6 buy + 2 rent as demo) */}
+            {/* Grid 8 cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {buyProperties.slice(0, 4).map((property) => (
-                <div key={property.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
-                  <img src={property.imageUrl} alt={property.title} className="w-full h-48 object-cover" />
+              {(Array.isArray(saleListings) ? saleListings : buyProperties).slice(0, 8).map((item: any) => (
+                <div key={item.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
+                  <img src={item.coverUrl || item.image} alt={item.title} className="w-full h-48 object-cover" />
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{property.title}</h3>
-                    <p className="text-accent font-bold text-lg mb-2">{property.priceDisplay}</p>
-                    <p className="text-sm text-gray-600">{property.address}</p>
+                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{item.title}</h3>
+                    <p className="text-accent font-bold text-lg mb-2">{item.priceText || item.priceDisplay}</p>
+                    <p className="text-sm text-gray-600">{item.districtName || item.address}</p>
                   </div>
                 </div>
               ))}
@@ -128,27 +150,14 @@ export default function Page() {
         {/* News Section */}
         <NewsSection />
 
-        {/* Location Browse Section */}
         <LocationBrowseSection />
 
-        {/* Final CTA */}
-        <section className="section-spacing bg-primary text-white">
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Sẵn sàng bắt đầu?
-            </h2>
-            <p className="text-lg text-white/90 mb-8">
-              Đăng tin bất động sán của bạn miễn phí trên Tổng Đài Địa Ốc hôm nay
-            </p>
-            <a href="/dang-tin" className="inline-block px-8 py-4 bg-accent text-white font-bold rounded-lg hover:bg-[#e07d1f] transition">
-              Đăng tin ngay
-            </a>
-          </div>
-        </section>
+        <Footer />
       </div>
-      
-      {/* Footer */}
-      <Footer />
     </main>
-  )
+  );
+}
+
+export default async function Page() {
+  return <HomePageContent />;
 }

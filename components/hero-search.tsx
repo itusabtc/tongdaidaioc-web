@@ -8,7 +8,11 @@ interface QuickFilter {
   label: string;
 }
 
-export default function HeroSearch() {
+interface HeroSearchProps {
+  statsCount?: string;
+}
+
+export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
   const [activeTab, setActiveTab] = useState('buy');
   const [location, setLocation] = useState('');
   const [filters, setFilters] = useState<QuickFilter[]>([
@@ -99,7 +103,7 @@ export default function HeroSearch() {
           {/* Info and Quick Filters */}
           <div>
             <p className="text-white text-sm mb-3">
-              Hiện có <span className="font-bold">12,340</span> nhà đất xác thực
+              Hiện có <span className="font-bold">{statsCount}</span> nhà đất xác thực
             </p>
             
             {/* Quick Filter Pills */}
