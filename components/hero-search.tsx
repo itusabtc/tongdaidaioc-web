@@ -72,7 +72,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
       />
 
       {/* Content Container */}
-      <div className="relative z-10 h-full flex flex-col justify-between pt-12 md:pt-16 pb-8 md:pb-12">
+      <div className="relative z-10 h-full flex flex-col justify-center items-center py-8 md:py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Headline Section */}
           <div className="mb-6 md:mb-8">
