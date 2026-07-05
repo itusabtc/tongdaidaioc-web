@@ -76,9 +76,9 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Headline Section */}
           <div className="mb-8 md:mb-12">
-            <p className="text-white text-xs md:text-sm font-medium mb-6 md:mb-8 flex items-center gap-2">
-              <span className="inline-block w-2 h-2 bg-white rounded-full" />
-              An tâm với chất lượng bất động sản xác thực tại TDDO
+            <p className="text-white text-xs md:text-sm font-medium mb-8 md:mb-12 flex items-center gap-3 leading-relaxed tracking-wide">
+              <span className="inline-block w-2 h-2 bg-white rounded-full flex-shrink-0" />
+              <span>An tâm với chất lượng bất động sản xác thực tại TDDO</span>
             </p>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight max-w-2xl">
               Trung tâm mua bán & Cho thuê bất động sản
@@ -140,8 +140,8 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
             </p>
             
             {/* Quick Filter Pills */}
-            <div className="flex flex-wrap gap-2">
-              <span className="text-white text-sm font-medium">Gợi ý:</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-white text-sm font-medium whitespace-nowrap">Gợi ý:</span>
               {filters.map((filter) => (
                 <button
                   key={filter.id}
