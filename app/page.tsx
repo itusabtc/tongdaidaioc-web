@@ -4,6 +4,10 @@ import Header from '@/components/header';
 import HeroSearch from '@/components/hero-search';
 import FeaturesSection from '@/components/features-section';
 import PropertiesSection from '@/components/properties-section';
+import AppDownloadSection from '@/components/app-download-section';
+import RecentlyViewedSection from '@/components/recently-viewed-section';
+import NewsSection from '@/components/news-section';
+import LocationBrowseSection from '@/components/location-browse-section';
 import { buyProperties, rentProperties } from '@/lib/property-data';
 
 export default function Page() {
@@ -47,6 +51,18 @@ export default function Page() {
             </button>
           </div>
         </section>
+
+        {/* App Download Section */}
+        <AppDownloadSection />
+
+        {/* Recently Viewed Section */}
+        <RecentlyViewedSection />
+
+        {/* News Section */}
+        <NewsSection />
+
+        {/* Location Browse Section */}
+        <LocationBrowseSection />
       </div>
     </main>
   )
