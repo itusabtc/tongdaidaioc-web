@@ -2,14 +2,18 @@
 
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { uploadMedia, generateDescription, createListing, getMe } from '@/lib/api';
 
 type Step = 1 | 2 | 3;
 
 export default function PostListingPage() {
   const [step, setStep] = useState<Step>(1);
   const [images, setImages] = useState<string[]>([]);
+  const [mediaIds, setMediaIds] = useState<string[]>([]);
   const [formData, setFormData] = useState({
+    title: '',
     listingType: 'sale',
     propertyType: 'apartment',
     price: '',
@@ -20,11 +24,40 @@ export default function PostListingPage() {
   });
   const [aiDescription, setAiDescription] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
 
-  const handleImageDrop = (e: React.DragEvent) => {
+  // Check if user is logged in
+  useEffect(() => {
+    async function checkAuth() {
+      const user = await getMe();
+      if (!user) {
+        router.push('/dang-nhap?returnUrl=/dang-tin');
+      }
+    }
+    checkAuth();
+  }, [router]);
+
+  const handleImageDrop = async (e: React.DragEvent) => {
     e.preventDefault();
-    // Mock image handling
-    setImages([...images, `image-${Date.now()}`]);
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    await handleImageUpload(files);
+  };
+
+  const handleImageUpload = async (files: File[]) => {
+    if (files.length === 0) return;
+    
+    setLoading(true);
+    setError('');
+    try {
+      const result = await uploadMedia(files);
+      setMediaIds([...mediaIds, ...result.ids]);
+      setImages([...images, ...files.map(f => URL.createObjectURL(f))]);
+    } catch (err: any) {
+      setError(err.message || 'Tải ảnh thất bại. Vui lòng thử lại.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleFormChange = (
@@ -36,18 +69,48 @@ export default function PostListingPage() {
 
   const generateAIDescription = async () => {
     setLoading(true);
-    // Mock AI description generation (2s delay)
-    await new Promise(r => setTimeout(r, 2000));
-    setAiDescription(
-      `${formData.propertyType === 'apartment' ? 'Căn hộ' : 'Nhà'} đẹp tại ${formData.district}, diện tích ${formData.area}m². ` +
-      `${formData.bedrooms} phòng ngủ, giá ${formData.price}. Thích hợp cho gia đình trẻ hoặc nhà đầu tư. ` +
-      `Tài sản pháp lý rõ ràng, sẵn sàng giao dịch ngay.`
-    );
-    setLoading(false);
+    setError('');
+    try {
+      const result = await generateDescription({
+        title: formData.title || formData.propertyType,
+        propertyType: formData.propertyType,
+        area: parseInt(formData.area) || 0,
+        bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : undefined,
+      });
+      setAiDescription(result.description);
+      setFormData(prev => ({ ...prev, description: result.description }));
+    } catch (err: any) {
+      setError(err.message || 'Tạo mô tả AI thất bại. Vui lòng thử lại.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSubmit = () => {
-    alert('Tin đăng của bạn đã được gửi lên! Chúng tôi sẽ duyệt trong 24h.');
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError('');
+    
+    try {
+      const result = await createListing({
+        title: formData.title || `${formData.propertyType} - ${formData.area}m²`,
+        propertyType: formData.propertyType,
+        listingType: formData.listingType as 'sale' | 'rent',
+        sourceType: 'chinhchu',
+        price: parseInt(formData.price) || 0,
+        area: parseInt(formData.area) || 0,
+        bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : undefined,
+        districtId: formData.district,
+        description: formData.description,
+        mediaIds: mediaIds,
+      });
+      
+      // Redirect to new listing
+      router.push(`/tin/${result.slug}`);
+    } catch (err: any) {
+      setError(err.message || 'Đăng tin thất bại. Vui lòng kiểm tra thông tin và thử lại.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,6 +119,13 @@ export default function PostListingPage() {
       <div className="pt-16">
         <div className="section-spacing">
           <div className="max-w-4xl mx-auto">
+            {/* Error Display */}
+            {error && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+                {error}
+              </div>
+            )}
+
             {/* Progress */}
             <div className="mb-12">
               <div className="flex justify-between mb-8">
