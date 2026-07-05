@@ -4,7 +4,23 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5151',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'tongdaidiaoc.vn',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
 }
 

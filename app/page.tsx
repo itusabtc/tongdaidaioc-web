@@ -1,18 +1,18 @@
 import Header from '@/components/header';
 import HeroSearch from '@/components/hero-search';
 import FeaturesSection from '@/components/features-section';
-import PropertiesSection from '@/components/properties-section';
 import NewsSection from '@/components/news-section';
 import LocationBrowseSection from '@/components/location-browse-section';
 import Footer from '@/components/footer';
+import LatestListingsTabs from '@/components/listings/latest-listings-tabs';
 import { getStats, getListings } from '@/lib/api';
-import { buyProperties, rentProperties } from '@/lib/property-data';
+import { mockListings } from '@/lib/mock/listings';
 
 async function HomePageContent() {
   // Try to fetch from API, fallback to mock data
   let statsCount = '12,340';
-  let saleListings = buyProperties;
-  let rentListings = rentProperties;
+  let saleListings = mockListings.filter(l => l.listingType === 'sale');
+  let rentListings = mockListings.filter(l => l.listingType === 'rent');
 
   try {
     const stats = await getStats();
@@ -22,12 +22,21 @@ async function HomePageContent() {
   }
 
   try {
-    const saleData = await getListings({ type: 'sale', pageSize: 8 });
+    const saleData = await getListings({ type: 'sale', pageSize: 12 });
     if (saleData.items.length > 0) {
       saleListings = saleData.items;
     }
   } catch (error) {
     console.error('Failed to fetch sale listings, using mock data');
+  }
+
+  try {
+    const rentData = await getListings({ type: 'rent', pageSize: 12 });
+    if (rentData.items.length > 0) {
+      rentListings = rentData.items;
+    }
+  } catch (error) {
+    console.error('Failed to fetch rent listings, using mock data');
   }
 
   return (
@@ -40,46 +49,7 @@ async function HomePageContent() {
         <FeaturesSection />
 
         {/* Latest Listings Section - Combined Buy & Rent */}
-        <section className="section-spacing">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Tin mới nhất
-            </h2>
-            
-            {/* Tabs */}
-            <div className="flex gap-6 mb-8 border-b border-gray-200">
-              <button className="pb-3 font-semibold text-lg text-primary border-b-2 border-primary">
-                Mua bán
-              </button>
-              <button className="pb-3 font-semibold text-lg text-gray-500 hover:text-gray-700">
-                Cho thuê
-              </button>
-            </div>
-
-            {/* Grid 8 cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {(Array.isArray(saleListings) ? saleListings : buyProperties).slice(0, 8).map((item: any) => (
-                <div key={item.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
-                  <img src={item.coverUrl || item.image} alt={item.title} className="w-full h-48 object-cover" />
-                  <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{item.title}</h3>
-                    <p className="text-accent font-bold text-lg mb-2">{item.priceText || item.priceDisplay}</p>
-                    <p className="text-sm text-gray-600">{item.districtName || item.address}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 text-center">
-              <a href="/mua-ban" className="text-primary hover:text-primary/80 font-medium flex items-center justify-center gap-1">
-                Xem tất cả
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
-            </div>
-          </div>
-        </section>
+        <LatestListingsTabs saleListings={saleListings} rentListings={rentListings} />
 
         {/* Post Instructions Section - 3 Steps */}
         <section className="section-spacing bg-gray-50">
