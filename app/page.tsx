@@ -44,10 +44,12 @@ async function HomePageContent() {
 
   return (
     <main className="min-h-screen bg-white">
-      <Header />
-      <div className="pt-16">
+      <div className="relative">
+        <Header />
         <HeroSearch statsCount={statsCount} />
-        
+      </div>
+      
+      <div>
         {/* Features Section */}
         <FeaturesSection />
 

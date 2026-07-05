@@ -57,13 +57,13 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
 
   return (
     <div 
-      className="relative w-full h-[600px] md:h-[700px] lg:h-[800px] bg-cover bg-center overflow-hidden"
+      className="relative w-full h-[600px] md:h-[700px] lg:h-[800px] bg-cover bg-center overflow-hidden -mt-16"
       style={{
-        backgroundImage: 'url(/images/landmark-81-banner.png)',
+        backgroundImage: 'url(/images/hero-bg-real-estate.png)',
       }}
     >
       {/* Dark Overlay with vertical stripes pattern */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/40" />
       <div 
         className="absolute inset-0 opacity-20"
         style={{
@@ -72,7 +72,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
       />
 
       {/* Content Container */}
-      <div className="relative z-10 h-full flex flex-col justify-between pt-8 md:pt-12 pb-8 md:pb-12">
+      <div className="relative z-10 h-full flex flex-col justify-between pt-24 md:pt-32 pb-8 md:pb-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Headline Section */}
           <div className="mb-8 md:mb-12">
@@ -80,7 +80,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
               <span className="inline-block w-2 h-2 bg-white rounded-full" />
               An tâm với chất lượng bất động sản xác thực tại TDDO
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight max-w-2xl">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight max-w-2xl">
               Trung tâm mua bán & Cho thuê bất động sản
             </h1>
 
