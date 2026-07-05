@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Calculator, Compass, Home, Briefcase, Palette, Hammer, FileText, Box } from 'lucide-react';
-import { FeaturedUtility } from '@/lib/mock/featured-utilities';
+import type { FeaturedUtility } from '@/lib/api';
 
 interface FeaturedUtilitiesSectionProps {
   utilities: FeaturedUtility[];
@@ -42,7 +42,7 @@ export default function FeaturedUtilitiesSection({ utilities }: FeaturedUtilitie
             className="flex items-center gap-3 bg-white rounded-lg shadow-sm border border-gray-100 p-4 hover:shadow-md hover:border-orange-300 transition group"
           >
             <div className={`${bgColors[index]} w-12 h-12 rounded-lg flex items-center justify-center shrink-0 text-orange-600 group-hover:text-orange-700`}>
-              {iconMap[utility.icon]}
+              {iconMap[utility.iconKey] ?? iconMap.calculator}
             </div>
             <span className="text-sm font-medium text-gray-800 line-clamp-2 group-hover:text-orange-600 transition">
               {utility.title}

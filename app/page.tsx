@@ -8,9 +8,11 @@ import BackToTop from '@/components/back-to-top';
 import LatestListingsSection from '@/components/listings/latest-listings-section';
 import FeaturedBrokersSection from '@/components/brokers/featured-brokers-section';
 import ToolsAndMortgageSection from '@/components/home/tools-and-mortgage-section';
-import { getStats, getListings } from '@/lib/api';
+import { getStats, getListings, getFeaturedUtilities, getMortgageArticles } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 import { featuredBrokers } from '@/lib/mock/featured-brokers';
+import { featuredUtilities as mockUtilities } from '@/lib/mock/featured-utilities';
+import { mortgageArticles as mockMortgage } from '@/lib/mock/mortgage-articles';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -20,6 +22,8 @@ async function HomePageContent() {
   let statsCount = '12,340';
   let saleListings = mockListings.filter(l => l.listingType === 'sale');
   let rentListings = mockListings.filter(l => l.listingType === 'rent');
+  let utilities = mockUtilities;
+  let mortgageArticles = mockMortgage;
 
   try {
     const stats = await getStats();
@@ -44,6 +48,14 @@ async function HomePageContent() {
     }
   } catch (error) {
     console.error('Failed to fetch rent listings, using mock data');
+  }
+
+  try {
+    const [u, m] = await Promise.all([getFeaturedUtilities(), getMortgageArticles()]);
+    if (u.length > 0) utilities = u;
+    if (m.length > 0) mortgageArticles = m;
+  } catch (error) {
+    console.error('Failed to fetch home content, using mock data');
   }
 
   return (
@@ -76,7 +88,7 @@ async function HomePageContent() {
         <FeaturedBrokersSection brokers={featuredBrokers} />
 
         {/* Tools and Mortgage Section */}
-        <ToolsAndMortgageSection />
+        <ToolsAndMortgageSection utilities={utilities} articles={mortgageArticles} />
 
         {/* Post Instructions Section - 3 Steps */}
         <section className="py-10 md:py-14 px-4 sm:px-6 lg:px-8 bg-gray-50">

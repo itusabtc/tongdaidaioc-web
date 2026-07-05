@@ -299,3 +299,45 @@ export async function submitLead(listingId: string, data: SubmitLeadRequest): Pr
     body: JSON.stringify(data),
   });
 }
+
+// Homepage content — tiện ích + vay mua nhà
+export interface FeaturedUtility {
+  id: string;
+  title: string;
+  slug?: string;
+  iconKey: string;
+  href: string;
+}
+
+export interface MortgageArticle {
+  id: string;
+  title: string;
+  slug?: string;
+  imageUrl: string;
+  bankName?: string;
+  href: string;
+}
+
+export interface SiteContentDetail {
+  id: string;
+  title: string;
+  slug: string;
+  contentType: 'utility' | 'mortgage' | string;
+  iconKey?: string;
+  imageUrl?: string;
+  bankName?: string;
+  href?: string;
+  bodyHtml?: string;
+}
+
+export async function getFeaturedUtilities(): Promise<FeaturedUtility[]> {
+  return apiFetch<FeaturedUtility[]>('/home/featured-utilities');
+}
+
+export async function getMortgageArticles(): Promise<MortgageArticle[]> {
+  return apiFetch<MortgageArticle[]>('/home/mortgage-articles');
+}
+
+export async function getContent(slug: string): Promise<SiteContentDetail> {
+  return apiFetch<SiteContentDetail>(`/content/${slug}`);
+}
