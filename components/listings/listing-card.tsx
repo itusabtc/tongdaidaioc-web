@@ -9,6 +9,7 @@ interface ListingCardProps {
     coverUrl?: string;
     districtName: string;
     sourceType?: string;
+    isOwnerVerified?: boolean;
     verified?: boolean;
   };
 }
@@ -48,7 +49,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
             </div>
           )}
 
-          {listing.verified && (
+          {(listing.isOwnerVerified || listing.verified) && (
             <div className="absolute top-2 right-2">
               <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded">
                 Đã xác thực
