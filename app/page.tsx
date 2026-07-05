@@ -4,9 +4,11 @@ import FeaturesSection from '@/components/features-section';
 import NewsSection from '@/components/news-section';
 import LocationBrowseSection from '@/components/location-browse-section';
 import Footer from '@/components/footer';
-import LatestListingsTabs from '@/components/listings/latest-listings-tabs';
+import LatestListingsSection from '@/components/listings/latest-listings-section';
+import FeaturedBrokersSection from '@/components/brokers/featured-brokers-section';
 import { getStats, getListings } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
+import { featuredBrokers } from '@/lib/mock/featured-brokers';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -53,8 +55,23 @@ async function HomePageContent() {
         {/* Features Section */}
         <FeaturesSection />
 
-        {/* Latest Listings Section - Combined Buy & Rent */}
-        <LatestListingsTabs saleListings={saleListings} rentListings={rentListings} />
+        {/* Latest Listings - Sale Section */}
+        <LatestListingsSection
+          title="Nhà đất bán mới nhất"
+          listings={saleListings}
+          viewAllHref="/mua-ban"
+        />
+
+        {/* Latest Listings - Rent Section */}
+        <LatestListingsSection
+          title="Nhà đất cho thuê mới nhất"
+          listings={rentListings}
+          viewAllHref="/cho-thue"
+          className="bg-gray-50"
+        />
+
+        {/* Featured Brokers Section */}
+        <FeaturedBrokersSection brokers={featuredBrokers} />
 
         {/* Post Instructions Section - 3 Steps */}
         <section className="section-spacing bg-gray-50">
