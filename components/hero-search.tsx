@@ -76,7 +76,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Headline Section */}
           <div className="mb-8 md:mb-12">
-            <p className="text-white text-xs md:text-sm font-medium mb-3 flex items-center gap-2">
+            <p className="text-white text-xs md:text-sm font-medium mb-6 md:mb-8 flex items-center gap-2">
               <span className="inline-block w-2 h-2 bg-white rounded-full" />
               An tâm với chất lượng bất động sản xác thực tại TDDO
             </p>

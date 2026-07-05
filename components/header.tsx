@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import AuthMenu from '@/components/auth/auth-menu';
@@ -109,7 +110,13 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
-            <div className={`font-bold text-2xl ${logoColorClass}`}>TDDO</div>
+            <Image
+              src="/images/tddo-logo.png"
+              alt="TDDO Logo"
+              width={40}
+              height={40}
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
