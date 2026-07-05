@@ -2,6 +2,7 @@
 
 import Header from '@/components/header';
 import HeroSearch from '@/components/hero-search';
+import FeaturesSection from '@/components/features-section';
 import PropertiesSection from '@/components/properties-section';
 import { buyProperties, rentProperties } from '@/lib/property-data';
 
@@ -12,6 +13,9 @@ export default function Page() {
       <div className="pt-16">
         <HeroSearch />
         
+        {/* Features Section */}
+        <FeaturesSection />
+
         {/* Buy Properties Section */}
         <PropertiesSection
           title="Nhà đất bán mới nhất"
