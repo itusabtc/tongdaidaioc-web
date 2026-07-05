@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import ListingCard from '@/components/listings/listing-card';
 import { getListings } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 
@@ -10,18 +11,32 @@ export const metadata: Metadata = {
   canonical: 'https://tongdaidiaoc.vn/mua-ban',
 };
 
-async function getSaleListings() {
+interface Props {
+  searchParams: Promise<{
+    page?: string;
+  }>;
+}
+
+async function getSaleListings(page: number = 1) {
   try {
-    const result = await getListings({ type: 'sale', pageSize: 24 });
-    return result.items;
+    const result = await getListings({ type: 'sale', page, pageSize: 24 });
+    return result;
   } catch (error) {
     console.error('Failed to fetch sale listings, using mock data');
-    return mockListings.filter(l => l.listingType === 'sale');
+    const saleListings = mockListings.filter(l => l.listingType === 'sale');
+    const pageSize = 24;
+    const total = saleListings.length;
+    const items = saleListings.slice((page - 1) * pageSize, page * pageSize);
+    return { items, total, page, pageSize };
   }
 }
 
-export default async function BuySellPage() {
-  const saleListings = await getSaleListings();
+export default async function BuySellPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const currentPage = parseInt(params.page || '1');
+  const result = await getSaleListings(currentPage);
+  const { items: saleListings, total, pageSize } = result;
+  const totalPages = Math.ceil(total / pageSize);
 
   return (
     <main className="min-h-screen bg-white">
@@ -36,7 +51,7 @@ export default async function BuySellPage() {
               <span className="text-gray-900 font-semibold">Mua bán</span>
             </nav>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">Mua bán nhà đất</h1>
-            <p className="text-gray-600 text-lg">{saleListings.length} tin đăng</p>
+            <p className="text-gray-600 text-lg">{total} tin đăng</p>
           </div>
         </section>
 
@@ -77,55 +92,35 @@ export default async function BuySellPage() {
 
               {/* Grid */}
               <div className="flex-1">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                   {saleListings.map((listing) => (
-                    <a
-                      key={listing.id}
-                      href={`/tin/${listing.slug}`}
-                      className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition group"
-                    >
-                      <div className="relative overflow-hidden bg-gray-100 h-48">
-                        <img
-                          src={listing.coverUrl}
-                          alt={listing.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition"
-                        />
-                        {listing.sourceType === 'moigioi' && (
-                          <div className="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
-                            Môi giới
-                          </div>
-                        )}
-                        {listing.isOwnerVerified && (
-                          <div className="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">
-                            Đã xác thực
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-4">
-                        <p className="text-accent font-bold text-lg mb-2">{listing.priceText}</p>
-                        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition">
-                          {listing.title}
-                        </h3>
-                        <div className="flex gap-4 text-sm text-gray-600 mb-2">
-                          <span>{listing.area} m²</span>
-                          {listing.bedrooms && <span>{listing.bedrooms} phòng</span>}
-                        </div>
-                        <p className="text-sm text-gray-600">{listing.districtName}</p>
-                      </div>
-                    </a>
+                    <ListingCard key={listing.id} listing={listing} />
                   ))}
                 </div>
 
-                {/* Pagination - placeholder */}
-                <div className="mt-12 flex justify-center gap-2">
-                  <button className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50">
-                    Trước
-                  </button>
-                  <button className="px-4 py-2 bg-primary text-white rounded">1</button>
-                  <button className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50">2</button>
-                  <button className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50">
-                    Tiếp
-                  </button>
+                {/* Pagination */}
+                <div className="flex justify-center gap-2 items-center">
+                  {currentPage > 1 && (
+                    <a
+                      href={`/mua-ban?page=${currentPage - 1}`}
+                      className="px-4 py-2 border border-primary text-primary rounded hover:bg-primary hover:text-white transition"
+                    >
+                      Trước
+                    </a>
+                  )}
+
+                  <span className="px-4 py-2 text-gray-600 font-medium">
+                    Trang {currentPage} / {totalPages || 1}
+                  </span>
+
+                  {currentPage < totalPages && (
+                    <a
+                      href={`/mua-ban?page=${currentPage + 1}`}
+                      className="px-4 py-2 border border-primary text-primary rounded hover:bg-primary hover:text-white transition"
+                    >
+                      Tiếp
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

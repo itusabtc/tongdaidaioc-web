@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import ListingCard from '@/components/listings/listing-card';
 import { getListings } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 
@@ -10,18 +11,33 @@ export const metadata: Metadata = {
   canonical: 'https://tongdaidiaoc.vn/cho-thue',
 };
 
-async function getRentListings() {
+interface Props {
+  searchParams: Promise<{
+    page?: string;
+  }>;
+}
+
+async function getRentListings(page: number = 1) {
   try {
-    const result = await getListings({ type: 'rent', pageSize: 24 });
-    return result.items;
+    const result = await getListings({ type: 'rent', page, pageSize: 24 });
+    return result;
   } catch (error) {
     console.error('Failed to fetch rent listings, using mock data');
-    return mockListings.filter(l => l.listingType === 'rent');
+    const rentListings = mockListings.filter(l => l.listingType === 'rent');
+    const pageSize = 24;
+    const total = rentListings.length;
+    const items = rentListings.slice((page - 1) * pageSize, page * pageSize);
+    return { items, total, page, pageSize };
   }
 }
 
-export default async function RentPage() {
-  const rentListings = await getRentListings();
+export default async function RentPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const currentPage = parseInt(params.page || '1');
+  const result = await getRentListings(currentPage);
+  const { items: rentListings, total, pageSize } = result;
+  const totalPages = Math.ceil(total / pageSize);
+
   return (
     <main className="min-h-screen bg-white">
       <Header />
@@ -34,44 +50,41 @@ export default async function RentPage() {
               <span className="text-gray-900 font-semibold">Cho thuê</span>
             </nav>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">Cho thuê nhà đất</h1>
-            <p className="text-gray-600 text-lg">{rentListings.length} tin đăng</p>
+            <p className="text-gray-600 text-lg">{total} tin đăng</p>
           </div>
         </section>
 
         <div className="section-spacing">
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
               {rentListings.map((listing) => (
-                <a
-                  key={listing.id}
-                  href={`/tin/${listing.slug}`}
-                  className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition group"
-                >
-                  <div className="relative overflow-hidden bg-gray-100 h-48">
-                    <img
-                      src={listing.coverUrl}
-                      alt={listing.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition"
-                    />
-                    {listing.sourceType === 'moigioi' && (
-                      <div className="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
-                        Môi giới
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-4">
-                    <p className="text-accent font-bold text-lg mb-2">{listing.priceText}</p>
-                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition">
-                      {listing.title}
-                    </h3>
-                    <div className="flex gap-4 text-sm text-gray-600 mb-2">
-                      <span>{listing.area} m²</span>
-                      {listing.bedrooms && <span>{listing.bedrooms} phòng</span>}
-                    </div>
-                    <p className="text-sm text-gray-600">{listing.districtName}</p>
-                  </div>
-                </a>
+                <ListingCard key={listing.id} listing={listing} />
               ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="flex justify-center gap-2 items-center">
+              {currentPage > 1 && (
+                <a
+                  href={`/cho-thue?page=${currentPage - 1}`}
+                  className="px-4 py-2 border border-primary text-primary rounded hover:bg-primary hover:text-white transition"
+                >
+                  Trước
+                </a>
+              )}
+
+              <span className="px-4 py-2 text-gray-600 font-medium">
+                Trang {currentPage} / {totalPages || 1}
+              </span>
+
+              {currentPage < totalPages && (
+                <a
+                  href={`/cho-thue?page=${currentPage + 1}`}
+                  className="px-4 py-2 border border-primary text-primary rounded hover:bg-primary hover:text-white transition"
+                >
+                  Tiếp
+                </a>
+              )}
             </div>
           </div>
         </div>
