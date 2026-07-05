@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import AuthMenu from '@/components/auth/auth-menu';
 
 interface DropdownState {
@@ -11,6 +12,9 @@ interface DropdownState {
 }
 
 export default function Header() {
+  const pathname = usePathname();
+  const isSubPage = pathname !== '/';
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [dropdowns, setDropdowns] = useState<DropdownState>({
@@ -112,10 +116,11 @@ export default function Header() {
     },
   ];
 
-  const bgClass = isScrolled ? 'bg-white shadow-md' : 'bg-transparent';
-  const textClass = isScrolled ? 'text-gray-900' : 'text-white';
-  const logoColorClass = isScrolled ? 'text-primary' : 'text-white';
-  const hoverClass = isScrolled ? 'hover:text-primary' : 'hover:text-accent';
+  // On sub-pages, always use solid white background with dark text
+  const bgClass = isSubPage || isScrolled ? 'bg-white shadow-md' : 'bg-transparent';
+  const textClass = isSubPage || isScrolled ? 'text-gray-900' : 'text-white';
+  const logoColorClass = isSubPage || isScrolled ? 'text-primary' : 'text-white';
+  const hoverClass = isSubPage || isScrolled ? 'hover:text-primary' : 'hover:text-accent';
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${bgClass}`}>
