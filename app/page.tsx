@@ -8,6 +8,7 @@ import AppDownloadSection from '@/components/app-download-section';
 import RecentlyViewedSection from '@/components/recently-viewed-section';
 import NewsSection from '@/components/news-section';
 import LocationBrowseSection from '@/components/location-browse-section';
+import Footer from '@/components/footer';
 import { buyProperties, rentProperties } from '@/lib/property-data';
 
 export default function Page() {
@@ -64,6 +65,9 @@ export default function Page() {
         {/* Location Browse Section */}
         <LocationBrowseSection />
       </div>
+      
+      {/* Footer */}
+      <Footer />
     </main>
   )
 }
