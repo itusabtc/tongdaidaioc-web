@@ -75,8 +75,8 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
       <div className="relative z-10 h-full flex flex-col justify-between pt-24 md:pt-32 pb-8 md:pb-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Headline Section */}
-          <div className="mb-8 md:mb-12">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight max-w-2xl">
+          <div className="mb-24 md:mb-32">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-12 leading-tight max-w-2xl">
               Trung tâm mua bán & Cho thuê bất động sản
             </h1>
 

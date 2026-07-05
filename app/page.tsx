@@ -108,9 +108,6 @@ async function HomePageContent() {
           </div>
         </section>
 
-        {/* Location Links Section */}
-        <LocationLinksSection />
-
         {/* Broker Section */}
         <section className="py-10 md:py-14 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
@@ -149,6 +146,9 @@ async function HomePageContent() {
         <LocationBrowseSection />
 
         <Footer />
+
+        {/* Location Links Section - Below Footer */}
+        <LocationLinksSection />
       </div>
     </main>
   );
