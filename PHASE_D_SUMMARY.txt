@@ -1,0 +1,231 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                  PHASE D - API INTEGRATION START                               ║
+║                         Tổng Đài Địa Ốc (TDDO)                                ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+STATUS: ✅ READY FOR BACKEND INTEGRATION
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT WAS DELIVERED
+
+1. CENTRALIZED API CLIENT (lib/api.ts - 296 lines)
+   ✅ apiFetch() wrapper with auto headers + token management
+   ✅ Token management: getToken(), setToken(), clearToken()
+   ✅ Error handling: ApiError class with Vietnamese messages
+   ✅ All 15 required API functions implemented
+   ✅ Automatic fallback to mock data when API unavailable
+
+2. ENVIRONMENT SETUP (.env.example)
+   ✅ NEXT_PUBLIC_API_BASE configuration
+   ✅ NEXT_PUBLIC_SITE_URL setup
+   ✅ Ready for local + production deployment
+
+3. UPDATED TYPE EXPORTS (lib/types/listing.ts)
+   ✅ ListingCard, ListingDetail, PagedListings exported from API
+   ✅ Full backward compatibility maintained
+
+4. HOMEPAGE INTEGRATION (app/page.tsx)
+   ✅ Refactored as async Server Component
+   ✅ Calls getStats() with fallback to mock
+   ✅ Calls getListings() for home feed
+   ✅ Real listing count displayed in hero section
+
+5. HERO SEARCH COMPONENT (components/hero-search.tsx)
+   ✅ Updated to accept statsCount prop
+   ✅ Displays real count from API
+   ✅ Fallback to "12,340" if API down
+
+6. COMPREHENSIVE DOCUMENTATION
+   ✅ PHASE_D_API_INTEGRATION_GUIDE.md (463 lines)
+      - Template code for each remaining page
+      - Error handling patterns
+      - Testing checklist
+      - Deployment steps
+   
+   ✅ PHASE_D_HANDOFF.md (257 lines)
+      - Completed work summary
+      - What's next
+      - API endpoint reference
+      - Deployment checklist
+   
+   ✅ API_SETUP_QUICK_START.md (178 lines)
+      - 2-minute setup guide
+      - Troubleshooting
+      - What's already working
+      - What needs implementation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+AVAILABLE API FUNCTIONS (All in lib/api.ts)
+
+Statistics:
+  getStats()                          → { activeListingCount: number }
+
+Browse:
+  getDistricts()                      → District[]
+  getListings(filters)                → PagedListings
+  getListing(slug)                    → ListingDetail
+  getSimilar(slug)                    → ListingCard[]
+
+Authentication:
+  login(email, password)              → { token, user }
+  register(data)                      → { token, user }
+  getMe()                             → User | null
+  logout()                            → void
+
+Listings Management:
+  createListing(data)                 → { id, slug }
+  getMyListings(status?)              → ListingCard[]
+
+Media & AI:
+  uploadMedia(files)                  → { ids: string[] }
+  generateDescription(data)           → { description }
+
+Contact:
+  submitLead(listingId, data)         → { id }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAGES READY FOR IMPLEMENTATION (6 remaining)
+
+Follow PHASE_D_API_INTEGRATION_GUIDE.md for template code:
+
+1. /mua-ban, /cho-thue (Listing pages)
+   → Server Component + getListings() + pagination + filters
+
+2. /tin/[slug] (Detail page)
+   → Dynamic metadata + JSON-LD schema + getSimilar() sidebar
+
+3. /dang-nhap, /dang-ky (Auth)
+   → login() / register() + token save + returnUrl redirect
+
+4. /dang-tin (Post wizard)
+   → uploadMedia() + generateDescription() + createListing()
+
+5. /tai-khoan/tin-cua-toi (My listings)
+   → getMyListings() + status badges
+
+6. Header Auth Menu
+   → getMe() check + user menu + logout + router.refresh()
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GIT COMMITS (Phase D)
+
+1d139c8 - Add API setup quick start guide (2-minute setup)
+20580c6 - Add Phase D handoff documentation
+b396368 - Phase D: Start API integration - create API client & homepage
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+QUICK START (2 minutes)
+
+1. Configure environment:
+   $ cp .env.example .env.local
+
+2. Start backend (port 5151):
+   $ cd ../TongDaiDiaOc
+   $ dotnet run --configuration Development
+
+3. Start frontend (port 3000):
+   $ pnpm dev
+
+4. Verify: http://localhost:3000 shows real stats count
+
+5. Test login: Check localStorage for tddo_token
+
+See API_SETUP_QUICK_START.md for detailed troubleshooting.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TESTING CHECKLIST
+
+✅ Homepage loads with real stats count
+✅ API client has all required functions
+✅ Token management works (localStorage)
+✅ Mock fallback works (when API down)
+✅ Metadata setup ready for detail pages
+✅ Error handling returns Vietnamese messages
+✅ No TypeScript errors
+✅ Ready to build (pnpm build passes)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KEY PATTERNS FOR DEVELOPERS
+
+Server Component (for pages with data fetching):
+  export default async function Page() {
+    try {
+      const data = await getListings({ type: 'sale' });
+      return <Component data={data} />;
+    } catch (error) {
+      return <FallbackUI />;
+    }
+  }
+
+Client Component (for forms and interactivity):
+  'use client';
+  
+  useEffect(() => {
+    const user = await getMe();
+    if (!user) router.push('/dang-nhap');
+  }, []);
+
+Error Handling:
+  try {
+    await apiCall();
+  } catch (err: any) {
+    displayError(err.message); // Vietnamese from backend
+    if (err.status === 401) router.push('/dang-nhap');
+  }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPORTANT REMINDERS
+
+✓ All fetch calls go through lib/api.ts - DON'T scatter fetch() in components
+✓ Token stored in localStorage - automatically handled by API client
+✓ API base URL in .env.local - DON'T hardcode localhost:5151
+✓ Error messages in Vietnamese - from backend API
+✓ Fallback to mock data - for offline development
+✓ Server Components for data pages - async/await syntax
+✓ Client Components for forms - useState, useEffect, etc.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NEXT STEPS FOR CLAUDE/CURSOR
+
+1. Read API_SETUP_QUICK_START.md (2 min setup)
+2. Read PHASE_D_API_INTEGRATION_GUIDE.md (implementation templates)
+3. Pick one page (/mua-ban recommended as first)
+4. Follow template code in guide
+5. Test with backend running
+6. Test fallback when backend down
+7. Move to next page
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BUILD & DEPLOYMENT STATUS
+
+Homepage:             ✅ Working (API + fallback)
+API Client:          ✅ Complete (lib/api.ts)
+Environment:         ✅ Configured (.env.example)
+Types:               ✅ Updated & exported
+Documentation:       ✅ Comprehensive (3 guides)
+Remaining Pages:     ⏳ Ready for implementation (6 pages)
+pnpm build:          ✅ Passes
+pnpm type-check:     ✅ Passes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Repository:  https://github.com/itusabtc/tongdaidaioc-web (master branch)
+Commit:      1d139c8 - Latest (API setup quick start)
+Backend:     http://localhost:5151/api (development)
+Frontend:    http://localhost:3000 (development)
+
+Date:        July 5, 2025
+Phase:       D - API Integration Start
+Status:      ✅ READY FOR BACKEND INTEGRATION
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
