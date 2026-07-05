@@ -78,7 +78,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
           <div className="mb-8 md:mb-12">
             <p className="text-white text-xs md:text-sm font-medium mb-8 md:mb-12 flex items-center gap-3 leading-relaxed tracking-wide">
               <span className="inline-block w-2 h-2 bg-white rounded-full flex-shrink-0" />
-              <span>An tâm với chất lượng bất động sản xác thực tại TDDO</span>
+              <span>An tâm với 100% bất động sản xác thực tại TDDO</span>
             </p>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight max-w-2xl">
               Trung tâm mua bán & Cho thuê bất động sản
