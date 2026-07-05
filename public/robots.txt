@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /*.xml$
+
+Sitemap: https://rever.vn/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# User-agents
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

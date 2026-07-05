@@ -1,0 +1,128 @@
+import React from 'react';
+
+export function OrganizationSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Rever',
+    url: 'https://rever.vn',
+    description: 'Nền tảng bất động sán trực tuyến hàng đầu Việt Nam',
+    logo: 'https://rever.vn/logo.png',
+    sameAs: [
+      'https://www.facebook.com/rever.vn',
+      'https://www.instagram.com/rever.vn',
+      'https://twitter.com/rever',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Support',
+      telephone: '+84-1800-234-546',
+      email: 'support@rever.vn',
+      availableLanguage: ['vi', 'en'],
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function LocalBusinessSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'Rever - Mua bán nhà đất',
+    image: 'https://rever.vn/logo.png',
+    description: 'Nền tảng mua bán nhà đất xác thực tại Việt Nam',
+    url: 'https://rever.vn',
+    telephone: '+84-1800-234-546',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Số 5-7, Đường B4, Phường An Lợi Đông',
+      addressLocality: 'Thủ Đức',
+      addressRegion: 'Hồ Chí Minh',
+      postalCode: '700000',
+      addressCountry: 'VN',
+    },
+    areaServed: {
+      '@type': 'Country',
+      name: 'VN',
+    },
+    priceRange: '$',
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function RealEstateListingSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: 'Bất động sán mua bán tại Rever',
+    description: '177,207+ bất động sán xác thực với thông tin chính xác',
+    url: 'https://rever.vn',
+    image: 'https://rever.vn/og-image.jpg',
+    priceCurrency: 'VND',
+    broker: {
+      '@type': 'RealEstateAgent',
+      name: 'Rever',
+      url: 'https://rever.vn',
+    },
+    areaServed: 'VN',
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function FAQSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Rever là gì?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Rever là nền tảng bất động sán trực tuyến hàng đầu Việt Nam với 177,207+ tin đăng xác thực.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Làm thế nào để tìm nhà đất trên Rever?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Bạn có thể sử dụng thanh tìm kiếm trên trang chủ để tìm kiếm theo địa điểm, giá cả, diện tích hoặc loại bất động sán.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Có phí sử dụng Rever không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Không, việc tìm kiếm và xem bất động sán trên Rever hoàn toàn miễn phí. Chỉ khi bạn muốn đăng tin bán hoặc cho thuê mới có phí.',
+        },
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
