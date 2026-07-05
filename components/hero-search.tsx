@@ -72,16 +72,16 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
       />
 
       {/* Content Container */}
-      <div className="relative z-10 h-full flex flex-col justify-between pt-24 md:pt-32 pb-8 md:pb-12">
+      <div className="relative z-10 h-full flex flex-col justify-between pt-12 md:pt-16 pb-8 md:pb-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Headline Section */}
-          <div className="mb-24 md:mb-32">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-12 leading-tight max-w-2xl">
+          <div className="mb-6 md:mb-8">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight max-w-2xl">
               Trung tâm mua bán & Cho thuê bất động sản
             </h1>
 
             {/* Tabs */}
-            <div className="flex gap-8 mt-8">
+            <div className="flex gap-8 mt-4">
               <button
                 onClick={() => setActiveTab('buy')}
                 className={`pb-2 font-semibold text-base transition relative ${
@@ -106,7 +106,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
           </div>
 
           {/* Search Box */}
-          <div className="bg-white rounded-md shadow-2xl p-0 overflow-hidden mb-6">
+          <div className="bg-white rounded-md shadow-2xl p-0 overflow-hidden mb-4">
             {/* Search Input Row */}
             <div className="flex items-center">
               <div className="flex-1 relative flex items-center">

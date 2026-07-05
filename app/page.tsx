@@ -3,7 +3,6 @@ import HeroSearch from '@/components/hero-search';
 import FeaturesSection from '@/components/features-section';
 import NewsSection from '@/components/news-section';
 import LocationBrowseSection from '@/components/location-browse-section';
-import LocationLinksSection from '@/components/location-links-section';
 import Footer from '@/components/footer';
 import LatestListingsSection from '@/components/listings/latest-listings-section';
 import FeaturedBrokersSection from '@/components/brokers/featured-brokers-section';
@@ -146,9 +145,6 @@ async function HomePageContent() {
         <LocationBrowseSection />
 
         <Footer />
-
-        {/* Location Links Section - Below Footer */}
-        <LocationLinksSection />
       </div>
     </main>
   );
