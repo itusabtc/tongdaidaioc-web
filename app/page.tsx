@@ -7,7 +7,7 @@ import Footer from '@/components/footer';
 import BackToTop from '@/components/back-to-top';
 import LatestListingsSection from '@/components/listings/latest-listings-section';
 import FeaturedBrokersSection from '@/components/brokers/featured-brokers-section';
-import BrokerAISection from '@/components/brokers/broker-ai-section';
+import BrokerUnifiedSection from '@/components/brokers/broker-unified-section';
 import ToolsAndMortgageSection from '@/components/home/tools-and-mortgage-section';
 import { getStats, getListings, getFeaturedUtilities, getMortgageArticles } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
@@ -88,8 +88,8 @@ async function HomePageContent() {
         {/* Featured Brokers Section */}
         <FeaturedBrokersSection brokers={featuredBrokers} />
 
-        {/* Broker AI Features Section */}
-        <BrokerAISection />
+        {/* Unified Broker Tools & AI Section */}
+        <BrokerUnifiedSection />
 
         {/* Tools and Mortgage Section */}
         <ToolsAndMortgageSection utilities={utilities} articles={mortgageArticles} />
