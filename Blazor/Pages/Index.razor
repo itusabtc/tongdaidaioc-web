@@ -2,31 +2,41 @@
 @using ReverBlazor.Components
 @using ReverBlazor.Models
 @using ReverBlazor.Services
-@inject IPropertyService PropertyService
-@inject IArticleService ArticleService
+@inject PropertyService PropertyService
+@inject ArticleService ArticleService
 
-<div class="pt-16">
+<PageTitle>Rever - Nền tảng bất động sán trực tuyến hàng đầu Việt Nam</PageTitle>
+
+<main class="min-h-screen bg-white">
+    {* Hero Search Section *}
     <HeroSearch />
     
+    {* Features Section - 4 key benefits *}
     <FeaturesSection />
 
-    <!-- Buy Properties Section -->
-    <PropertiesSection Title="Nhà đất bán mới nhất" Count="14,727" Properties="@BuyProperties" />
+    {* Buy Properties Section *}
+    @if (BuyProperties != null && BuyProperties.Count > 0)
+    {
+        <PropertiesSection Title="Nhà đất bán mới nhất" Count="14,727" Properties="BuyProperties" />
+    }
 
-    <!-- Divider -->
+    {* Divider *}
     <div class="border-t border-gray-200"></div>
 
-    <!-- Rent Properties Section -->
-    <PropertiesSection Title="Nhà đất cho thuê mới nhất" Count="3,518" Properties="@RentProperties" />
+    {* Rent Properties Section *}
+    @if (RentProperties != null && RentProperties.Count > 0)
+    {
+        <PropertiesSection Title="Nhà đất cho thuê mới nhất" Count="3,518" Properties="RentProperties" />
+    }
 
-    <!-- CTA Section -->
+    {* CTA Section - Promote Property Posting *}
     <section class="bg-gradient-to-r from-red-50 to-red-100 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Có căn hộ hoặc đất cần bán?
             </h2>
             <p class="text-gray-700 text-lg mb-8">
-                Đăng tin bất động sản của bạn miễn phí trên Rever ngay hôm nay
+                Đăng tin bất động sán của bạn miễn phí trên Rever ngay hôm nay
             </p>
             <button class="px-8 py-4 bg-red-600 text-white font-bold text-lg rounded-lg hover:bg-red-700 transition">
                 Đăng tin ngay
@@ -34,52 +44,36 @@
         </div>
     </section>
 
-    <!-- App Download Section -->
+    {* App Download Section - Mobile promotion *}
     <AppDownloadSection />
 
-    <!-- Recently Viewed Section -->
-    @if (RecentlyViewed != null && RecentlyViewed.Count > 0)
-    {
-        <RecentlyViewedSection Property="@RecentlyViewed[0]" />
-    }
+    {* Recently Viewed Section *}
+    <RecentlyViewedSection />
 
-    <!-- News Section -->
-    <NewsSection Articles="@Articles" />
+    {* News/Articles Section *}
+    <NewsSection />
 
-    <!-- Location Browse Section -->
+    {* Location Browse Section - Directory links *}
     <LocationBrowseSection />
-</div>
+</main>
 
 @code {
-    private List<Property> BuyProperties = new();
-    private List<Property> RentProperties = new();
-    private List<Property> RecentlyViewed = new();
-    private List<Article> Articles = new();
-
+    private List<Property>? BuyProperties;
+    private List<Property>? RentProperties;
+    
     protected override async Task OnInitializedAsync()
     {
-        // Load properties
-        BuyProperties = await PropertyService.GetBuyPropertiesAsync();
-        RentProperties = await PropertyService.GetRentPropertiesAsync();
-
-        // Load articles
-        Articles = await ArticleService.GetArticlesAsync();
-
-        // Load recently viewed (placeholder)
-        RecentlyViewed = new List<Property>
+        try
         {
-            new Property
-            {
-                Id = 1,
-                Title = "Căn hộ LUMIÈRE Boulevard",
-                Address = "A09199286 • Nguyễn Xiển, Long Thạnh Mỹ, Quận 9",
-                Price = 13,
-                PriceDisplay = "13 tr/tháng",
-                Area = 74,
-                Bedrooms = 2,
-                Bathrooms = 2,
-                ImageUrl = "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&h=400&fit=crop"
-            }
-        };
+            // Load buy properties
+            BuyProperties = await PropertyService.GetPropertiesAsync();
+            
+            // Load rent properties (same data for demo, Claude will implement different logic)
+            RentProperties = await PropertyService.GetPropertiesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Error] Loading properties: {ex.Message}");
+        }
     }
 }
