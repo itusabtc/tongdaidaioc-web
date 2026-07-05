@@ -113,9 +113,10 @@ export default function Header() {
             <Image
               src="/images/tddo-logo.png"
               alt="TDDO Logo"
-              width={40}
-              height={40}
-              className="h-10 w-auto"
+              width={48}
+              height={48}
+              className="h-12 w-auto"
+              priority
             />
           </Link>
 
