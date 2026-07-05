@@ -39,7 +39,7 @@ export default function LatestListingsSection({
 
         {/* Listings Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {listings.slice(0, 8).map((listing) => (
+          {listings.slice(0, 12).map((listing) => (
             <ListingCard key={listing.id} listing={listing} />
           ))}
         </div>

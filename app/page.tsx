@@ -4,6 +4,7 @@ import FeaturesSection from '@/components/features-section';
 import NewsSection from '@/components/news-section';
 import LocationBrowseSection from '@/components/location-browse-section';
 import Footer from '@/components/footer';
+import BackToTop from '@/components/back-to-top';
 import LatestListingsSection from '@/components/listings/latest-listings-section';
 import FeaturedBrokersSection from '@/components/brokers/featured-brokers-section';
 import { getStats, getListings } from '@/lib/api';
@@ -146,6 +147,8 @@ async function HomePageContent() {
 
         <Footer />
       </div>
+
+      <BackToTop />
     </main>
   );
 }
