@@ -55,7 +55,7 @@ const locations = {
 
 export default function LocationBrowseSection() {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white border-t border-gray-200">
+    <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl font-bold text-gray-900 mb-8">
           Xem nhà đất theo địa điểm
