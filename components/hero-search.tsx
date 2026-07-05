@@ -13,6 +13,13 @@ interface HeroSearchProps {
   statsCount?: string;
 }
 
+const DISTRICT_SLUGS: Record<string, string> = {
+  'Quận 1': 'quan-1',
+  'Quận 7': 'quan-7',
+  'Thủ Đức': 'thanh-pho-thu-duc',
+  'Bình Thạnh': 'quan-binh-thanh',
+};
+
 export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('buy');
@@ -37,7 +44,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
 
   const handleChipClick = (chip: QuickFilter) => {
     const searchParams = new URLSearchParams();
-    searchParams.set('district', chip.label.toLowerCase().replace('quận', 'quan-').replace('thủ đức', 'thu-duc').replace(' ', '-'));
+    searchParams.set('district', DISTRICT_SLUGS[chip.label] || chip.label.toLowerCase());
     searchParams.set('type', activeTab === 'buy' ? 'sale' : 'rent');
     router.push(`/tim-kiem?${searchParams.toString()}`);
   };

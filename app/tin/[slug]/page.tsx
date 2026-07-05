@@ -13,6 +13,9 @@ interface Props {
   };
 }
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const listing = await getListing(params.slug);
@@ -35,12 +38,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `${listing.title}. ${listing.area}m², giá ${listing.priceText}. ${listing.districtName}`,
     };
   }
-}
-
-export async function generateStaticParams() {
-  return mockListings.map(listing => ({
-    slug: listing.slug,
-  }));
 }
 
 export default async function ListingPage({ params }: Props) {
@@ -119,7 +116,7 @@ export default async function ListingPage({ params }: Props) {
               {/* Title & Code */}
               <div className="border-b border-gray-200 pb-6">
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">{listing.title}</h1>
-                <p className="text-gray-500 text-sm">Mã tin: <span className="font-semibold">{listing.id}</span></p>
+                <p className="text-gray-500 text-sm">Mã tin: <span className="font-semibold">{listing.code || listing.id}</span></p>
               </div>
 
               {/* Overview */}

@@ -34,7 +34,7 @@ export default function AccountClient() {
         }
 
         setUser(userData);
-        setListings(myListings.items || []);
+        setListings(Array.isArray(myListings) ? myListings : []);
       } catch (err: any) {
         setError(err.message || 'Lỗi tải dữ liệu');
       } finally {

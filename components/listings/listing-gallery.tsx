@@ -36,7 +36,7 @@ export default function ListingGallery({ images, title }: ListingGalleryProps) {
     setCurrentIndex(Math.min(images.length - 1, currentIndex + 1));
   };
 
-  if (!mounted || !images.length) {
+  if (!images.length) {
     return (
       <div className="w-full bg-gray-200 rounded-lg aspect-video flex items-center justify-center">
         <span className="text-gray-400">Không có ảnh</span>

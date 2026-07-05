@@ -8,6 +8,9 @@ import LatestListingsTabs from '@/components/listings/latest-listings-tabs';
 import { getStats, getListings } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 async function HomePageContent() {
   // Try to fetch from API, fallback to mock data
   let statsCount = '12,340';

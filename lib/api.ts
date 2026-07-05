@@ -75,6 +75,7 @@ export async function getDistricts(): Promise<District[]> {
 // Listings
 export interface ListingCard {
   id: string;
+  code?: string;
   slug: string;
   title: string;
   listingType: 'sale' | 'rent';
@@ -115,7 +116,7 @@ export interface PagedListings {
 
 export interface ListingFilters {
   type?: 'sale' | 'rent';
-  keyword?: string;
+  kw?: string;
   district?: string;
   sort?: string;
   page?: number;
@@ -125,7 +126,7 @@ export interface ListingFilters {
 export async function getListings(filters: ListingFilters = {}): Promise<PagedListings> {
   const params = new URLSearchParams();
   if (filters.type) params.append('type', filters.type);
-  if (filters.keyword) params.append('keyword', filters.keyword);
+  if (filters.kw) params.append('kw', filters.kw);
   if (filters.district) params.append('district', filters.district);
   if (filters.sort) params.append('sort', filters.sort);
   if (filters.page) params.append('page', String(filters.page));
@@ -233,9 +234,13 @@ export async function createListing(data: CreateListingRequest): Promise<CreateL
   });
 }
 
-export async function getMyListings(status?: string): Promise<ListingCard[]> {
+export interface MyListing extends ListingCard {
+  status: string;
+}
+
+export async function getMyListings(status?: string): Promise<MyListing[]> {
   const query = status ? `?status=${status}` : '';
-  return apiFetch<ListingCard[]>(`/me/listings${query}`);
+  return apiFetch<MyListing[]>(`/me/listings${query}`);
 }
 
 // Media Upload
