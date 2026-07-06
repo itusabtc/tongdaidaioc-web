@@ -24,20 +24,24 @@ export default function FeaturedBrokersSection({ brokers }: FeaturedBrokersSecti
     <section className="py-10 md:py-14 bg-gradient-to-br from-blue-50 to-orange-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Môi giới nổi bật
-          </h2>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Môi giới nổi bật
+            </h2>
+            <p className="text-gray-600 mt-2 text-sm md:text-base">
+              Kết nối nhanh với môi giới đang đăng tin trên TDDO
+            </p>
+          </div>
           <Link
             href="/moi-gioi"
-            className="flex items-center gap-2 text-[#F2922E] font-semibold hover:text-[#e07d1f] transition"
+            className="flex items-center gap-2 text-[#F2922E] font-semibold hover:text-[#e07d1f] transition shrink-0"
           >
             Xem tất cả
             <ChevronRight size={20} />
           </Link>
         </div>
 
-        {/* Brokers Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {brokers.map((broker) => (
             <Link

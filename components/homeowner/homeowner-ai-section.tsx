@@ -31,7 +31,7 @@ export default function HomeownerAISection() {
           Dành cho chủ nhà
         </h2>
         <p className="text-gray-600 text-center mb-3 text-lg max-w-2xl mx-auto">
-          Đăng tin miễn phí — AI lo phần khó, bạn chỉ cần chụp ảnh
+          Đăng tin miễn phí trên sân chơi TDDO — AI gợi ý nội dung, giúp bạn kết nối người mua nhanh hơn
         </p>
         <p className="text-center text-sm text-gray-500 mb-10">
           {steps.join(' → ')}

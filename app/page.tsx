@@ -76,6 +76,7 @@ async function HomePageContent() {
           title="Nhà đất bán mới nhất"
           listings={saleListings}
           viewAllHref="/mua-ban"
+          className="!pt-4 md:!pt-6"
         />
 
         {/* Latest Listings - Rent Section */}
@@ -89,16 +90,16 @@ async function HomePageContent() {
         {/* Featured Brokers Section */}
         <FeaturedBrokersSection brokers={featuredBrokers} />
 
+        {/* Broker CRM + AI — trước chủ nhà */}
+        <BrokerUnifiedSection />
+
         {/* Homeowner AI Section */}
         <HomeownerAISection />
 
         {/* Tools and Mortgage Section */}
         <ToolsAndMortgageSection utilities={utilities} articles={mortgageArticles} />
 
-        {/* Broker CRM + AI — single section */}
-        <BrokerUnifiedSection />
-
-        {/* News Section */}
+        {/* Blogs — tin BĐS tổng hợp (bước 2: crawl báo) */}
         <NewsSection />
 
         <LocationBrowseSection />

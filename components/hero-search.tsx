@@ -77,7 +77,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
           {/* Headline Section */}
           <div className="mb-6 md:mb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight max-w-2xl">
-              Trung tâm mua bán & Cho thuê bất động sản
+              Sân chơi mua bán & cho thuê bất động sản
             </h1>
 
             {/* Tabs */}
@@ -132,7 +132,7 @@ export default function HeroSearch({ statsCount = '12,340' }: HeroSearchProps) {
           {/* Info and Quick Filters */}
           <div>
             <p className="text-white text-sm mb-3">
-              Hiện có <span className="font-bold">{statsCount}</span> nhà đất xác thực
+              Hiện có <span className="font-bold">{statsCount}</span> tin đăng — kết nối người mua & người bán
             </p>
             
             {/* Quick Filter Pills */}

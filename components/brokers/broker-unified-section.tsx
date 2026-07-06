@@ -38,7 +38,7 @@ export default function BrokerUnifiedSection() {
             Dành cho Môi giới
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            CRM thông minh + AI — quản lý khách một chỗ, chốt deal nhanh hơn
+            Đăng tin nhanh, CRM quản lý khách và AI hỗ trợ kết nối người mua trên cùng sân chơi
           </p>
         </div>
 
