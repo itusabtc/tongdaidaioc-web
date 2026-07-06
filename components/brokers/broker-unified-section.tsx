@@ -1,157 +1,113 @@
 'use client';
 
 import Link from 'next/link';
-import { Brain, BarChart3, MessageSquare, Zap, ClipboardList, MessageCircle, Megaphone, TrendingUp } from 'lucide-react';
-
-interface ToolFeature {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
-
-interface AIFeature {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
+import {
+  Brain,
+  BarChart3,
+  MessageSquare,
+  MessageCircle,
+  Inbox,
+  Bell,
+  Users,
+} from 'lucide-react';
 
 export default function BrokerUnifiedSection() {
-  const tools: ToolFeature[] = [
+  const aiAssist = [
     {
-      icon: <ClipboardList size={48} className="text-primary" strokeWidth={1.5} />,
-      title: 'Quản lý tin',
-      description: 'Quản lý đầy đủ danh sách bất động sản của bạn',
+      icon: <MessageSquare size={28} className="text-primary" strokeWidth={1.5} />,
+      title: 'AI gợi ý nội dung tin',
+      description: 'Viết mô tả SEO chuẩn trong vài giây',
     },
     {
-      icon: <MessageCircle size={48} className="text-primary" strokeWidth={1.5} />,
-      title: 'CRM & Chatbot',
-      description: 'Giao tiếp hiệu quả với khách hàng tự động',
-    },
-    {
-      icon: <Megaphone size={48} className="text-primary" strokeWidth={1.5} />,
-      title: 'Đẩy tin đa kênh',
-      description: 'Quảng cáo trên nhiều nền tảng cùng lúc',
-    },
-    {
-      icon: <TrendingUp size={48} className="text-primary" strokeWidth={1.5} />,
-      title: 'Thống kê & Báo cáo',
-      description: 'Phân tích chi tiết hiệu suất kinh doanh',
-    },
-  ];
-
-  const aiFeatures: AIFeature[] = [
-    {
-      icon: <Brain size={40} className="text-white" strokeWidth={1.5} />,
+      icon: <Brain size={28} className="text-primary" strokeWidth={1.5} />,
       title: 'AI Lead Scoring',
-      description: 'Xác định khách hàng tiềm năng cao nhất tự động',
+      description: 'Ưu tiên khách tiềm năng, chốt deal nhanh hơn',
     },
     {
-      icon: <BarChart3 size={40} className="text-white" strokeWidth={1.5} />,
-      title: 'AI Market Analytics',
-      description: 'Phân tích xu hướng thị trường, giá cả theo khu vực',
-    },
-    {
-      icon: <MessageSquare size={40} className="text-white" strokeWidth={1.5} />,
-      title: 'AI Content Generator',
-      description: 'Tạo mô tả bất động sản hấp dẫn tự động',
-    },
-    {
-      icon: <Zap size={40} className="text-white" strokeWidth={1.5} />,
-      title: 'AI Workflow Automation',
-      description: 'Tự động hóa các tác vụ lặp lại, tiết kiệm thời gian',
+      icon: <BarChart3 size={28} className="text-primary" strokeWidth={1.5} />,
+      title: 'Thống kê pipeline',
+      description: 'Conversion, tin hot, hiệu suất theo quận',
     },
   ];
 
   return (
-    <>
-      {/* Tools Section */}
-      <section className="py-10 md:py-14 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Dành cho Môi giới
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Công cụ chuyên nghiệp giúp môi giới tăng doanh số
-            </p>
-          </div>
-
-          {/* Tools Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-            {tools.map((tool, index) => (
-              <div
-                key={index}
-                className="text-center flex flex-col items-center hover:shadow-lg transition-all p-6 rounded-lg"
-              >
-                <div className="mb-4 flex justify-center">
-                  {tool.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {tool.title}
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  {tool.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link
-              href="/moi-gioi"
-              className="inline-block px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-blue-800 transition-all"
-            >
-              Tìm hiểu thêm
-            </Link>
-          </div>
+    <section className="py-10 md:py-14 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-10 md:mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Dành cho Môi giới
+          </h2>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            CRM thông minh + AI — quản lý khách một chỗ, chốt deal nhanh hơn
+          </p>
         </div>
-      </section>
 
-      {/* AI Features Section */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary to-blue-700">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Công nghệ AI Tiên tiến
-            </h2>
-            <p className="text-gray-100 text-lg max-w-2xl mx-auto">
-              Công nghệ AI giúp môi giới tăng doanh số, quản lý khách hàng hiệu quả hơn
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          {/* CRM hero */}
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 flex flex-col">
+            <span className="inline-flex self-start items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4">
+              CRM
+            </span>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center">
+                <MessageCircle size={32} className="text-white" strokeWidth={1.5} />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">CRM & Chatbot</h3>
+            </div>
+            <p className="text-gray-600 mb-6 leading-relaxed">
+              Inbox đa kênh Zalo, Facebook, web — phân loại lead, nhắc follow-up tự động,
+              không bỏ sót khách quan tâm.
             </p>
+            <ul className="space-y-3 mb-8 flex-1">
+              {[
+                { icon: <Inbox size={18} />, text: 'Hộp thư hợp nhất — trả lời nhanh một nơi' },
+                { icon: <Bell size={18} />, text: 'Nhắc lịch hẹn xem nhà & follow-up' },
+                { icon: <Users size={18} />, text: 'Phân loại lead: nóng / ấm / lạnh' },
+              ].map((item) => (
+                <li key={item.text} className="flex items-start gap-3 text-sm text-gray-700">
+                  <span className="text-primary mt-0.5 shrink-0">{item.icon}</span>
+                  {item.text}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* AI Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            {aiFeatures.map((feature, index) => (
+          {/* AI assists */}
+          <div className="flex flex-col gap-4">
+            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide px-1">
+              Hỗ trợ bởi AI
+            </p>
+            {aiAssist.map((item) => (
               <div
-                key={index}
-                className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6 hover:bg-opacity-20 transition-all border border-white border-opacity-20"
+                key={item.title}
+                className="bg-white rounded-xl border border-gray-200 p-5 flex gap-4 items-start hover:shadow-md hover:border-primary/20 transition"
               >
-                <div className="mb-4 flex justify-center">
-                  <div className="p-3 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
-                    {feature.icon}
+                <div className="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center shrink-0">
+                  {item.icon}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h4 className="font-bold text-gray-900">{item.title}</h4>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-accent text-white">
+                      AI
+                    </span>
                   </div>
+                  <p className="text-sm text-gray-600">{item.description}</p>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2 text-center">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-100 text-sm text-center">
-                  {feature.description}
-                </p>
               </div>
             ))}
           </div>
-
-          {/* CTA */}
-          <div className="text-center">
-            <Link
-              href="/moi-gioi"
-              className="inline-block px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:shadow-xl hover:scale-105 transition-all"
-            >
-              Khám phá công cụ cho Môi giới →
-            </Link>
-          </div>
         </div>
-      </section>
-    </>
+
+        <div className="text-center mt-10">
+          <Link
+            href="/moi-gioi"
+            className="inline-block px-8 py-4 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition"
+          >
+            Khám phá CRM cho môi giới
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }

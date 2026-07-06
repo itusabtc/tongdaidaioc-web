@@ -89,14 +89,14 @@ async function HomePageContent() {
         {/* Featured Brokers Section */}
         <FeaturedBrokersSection brokers={featuredBrokers} />
 
-        {/* Unified Broker Tools & AI Section */}
-        <BrokerUnifiedSection />
-
         {/* Homeowner AI Section */}
         <HomeownerAISection />
 
         {/* Tools and Mortgage Section */}
         <ToolsAndMortgageSection utilities={utilities} articles={mortgageArticles} />
+
+        {/* Broker CRM + AI — single section */}
+        <BrokerUnifiedSection />
 
         {/* News Section */}
         <NewsSection />
