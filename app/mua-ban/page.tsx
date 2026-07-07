@@ -7,7 +7,7 @@ import { mockListings } from '@/lib/mock/listings';
 
 export const metadata: Metadata = {
   title: 'Mua bán nhà đất | Tổng Đài Địa Ốc',
-  description: 'Tìm kiếm và mua bán nhà đất, căn hộ, dự án bất động sán. Hàng trăm tin đăng xác thực.',
+  description: 'Tìm kiếm và mua bán nhà đất, căn hộ TP.HCM. Đăng tin miễn phí - AI hỗ trợ nội dung.',
   canonical: 'https://tongdaidiaoc.vn/mua-ban',
 };
 

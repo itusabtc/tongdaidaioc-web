@@ -6,7 +6,7 @@ export function OrganizationSchema() {
     '@type': 'Organization',
     name: 'Tổng Đài Địa Ốc',
     url: 'https://tongdaidiaoc.vn',
-    description: 'Nền tảng bất động sán trực tuyến hàng đầu Việt Nam',
+    description: 'Sân chơi mua bán & cho thuê bất động sán với AI hỗ trợ',
     logo: 'https://tongdaidiaoc.vn/logo.png',
     sameAs: [
       'https://www.facebook.com/tongdaidiaoc',
@@ -35,7 +35,7 @@ export function LocalBusinessSchema() {
     '@type': 'LocalBusiness',
     name: 'Tổng Đài Địa Ốc - Mua bán nhà đất',
     image: 'https://tongdaidiaoc.vn/logo.png',
-    description: 'Nền tảng mua bán và cho thuê nhà đất xác thực tại Việt Nam',
+    description: 'Sân chơi mua bán và cho thuê bất động sán - tìm kiếm, đăng tin miễn phí',
     url: 'https://tongdaidiaoc.vn',
     telephone: '+84-24-6281-2999',
     address: {
@@ -66,7 +66,7 @@ export function RealEstateListingSchema() {
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',
     name: 'Bất động sán mua bán và cho thuê tại Tổng Đài Địa Ốc',
-    description: '12,340+ bất động sán xác thực với thông tin chính xác',
+    description: '12,340+ tin đăng bất động sán TP.HCM - đăng tin nhanh, AI hỗ trợ',
     url: 'https://tongdaidiaoc.vn',
     image: 'https://tongdaidiaoc.vn/og-image.jpg',
     priceCurrency: 'VND',
@@ -96,7 +96,7 @@ export function FAQSchema() {
         name: 'Tổng Đài Địa Ốc là gì?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Tổng Đài Địa Ốc là nền tảng bất động sán trực tuyến hàng đầu Việt Nam với 12,340+ tin đăng xác thực.',
+          text: 'Tổng Đài Địa Ốc là sân chơi mua bán & cho thuê bất động sán với 12,340+ tin đăng, AI hỗ trợ đăng tin, và công cụ kết nối người mua & người bán.',
         },
       },
       {

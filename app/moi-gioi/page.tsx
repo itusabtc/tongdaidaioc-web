@@ -28,7 +28,7 @@ export default function BrokerPage() {
     {
       icon: Check,
       title: 'Hỗ trợ 24/7',
-      description: 'Đội ngũ chuyên gia luôn sẵn sàng hỗ trợ bạn',
+      description: 'Hỗ trợ kỹ thuật và tư vấn luôn sẵn sàng',
     },
   ];
 

@@ -5,7 +5,7 @@ import { Sparkles, Image as ImageIcon, FileText, Zap, CheckCircle } from 'lucide
 
 export const metadata = {
   title: 'Đăng tin bất động sản siêu dễ - TDDO',
-  description: 'Đăng tin bất động sản với hỗ trợ AI tiên tiến: gợi ý nội dung, chỉnh sửa ảnh, tự động định giá',
+  description: 'Đăng tin bất động sản miễn phí với AI hỗ trợ: gợi ý nội dung, chỉnh sửa ảnh, tự động định giá',
 };
 
 export default function DangTinPage() {

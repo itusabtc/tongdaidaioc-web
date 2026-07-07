@@ -7,7 +7,7 @@ import { mockListings } from '@/lib/mock/listings';
 
 export const metadata: Metadata = {
   title: 'Cho thuê nhà đất | Tổng Đài Địa Ốc',
-  description: 'Tìm kiếm và cho thuê nhà đất, căn hộ, phòng trọ. Hàng trăm tin đăng xác thực.',
+  description: 'Tìm kiếm và cho thuê nhà đất, căn hộ TP.HCM. Đăng tin miễn phí - AI hỗ trợ nội dung.',
   canonical: 'https://tongdaidiaoc.vn/cho-thue',
 };
 
