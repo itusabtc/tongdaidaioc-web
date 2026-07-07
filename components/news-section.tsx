@@ -2,6 +2,7 @@
 
 import { ChevronRight, CalendarDays, Newspaper } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export interface BlogItem {
   id: string;
@@ -14,7 +15,10 @@ export interface BlogItem {
   href?: string;
 }
 
-/** Mock — bước 2: thay bằng API crawl tin BĐS từ báo */
+/** Mock — bước 2: thay bằng API crawl tin BĐS từ báo. Chỉ dùng URL Unsplash đã kiểm tra 200. */
+const BLOG_PLACEHOLDER =
+  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop';
+
 export const blogItems: BlogItem[] = [
   {
     id: '1',
@@ -69,7 +73,7 @@ export const blogItems: BlogItem[] = [
     id: '7',
     title: 'BĐS công nghiệp Long An: thuê đất tăng 8% so với cùng kỳ',
     date: '01/07/2026',
-    image: 'https://images.unsplash.com/photo-1582407947306-fb86f028e111?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&h=600&fit=crop',
     category: 'Thị trường',
     source: 'VnExpress',
   },
@@ -82,6 +86,27 @@ export const blogItems: BlogItem[] = [
     source: 'VietNamNet',
   },
 ];
+
+function BlogCoverImage({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const [imgSrc, setImgSrc] = useState(src);
+
+  return (
+    <img
+      src={imgSrc}
+      alt={alt}
+      className={className}
+      onError={() => setImgSrc(BLOG_PLACEHOLDER)}
+    />
+  );
+}
 
 function SourceBadge({ source }: { source: string }) {
   const isInternal = source === 'TDDO';
@@ -110,7 +135,7 @@ function BlogCard({
       <Link href={href} className="group block h-full">
         <article className="h-full flex flex-col">
           <div className="relative overflow-hidden rounded-xl bg-gray-200 aspect-[16/10] mb-4">
-            <img
+            <BlogCoverImage
               src={item.image}
               alt={item.title}
               className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
@@ -141,7 +166,7 @@ function BlogCard({
     return (
       <Link href={href} className="group flex gap-4 items-start">
         <div className="w-32 h-24 md:w-36 md:h-28 rounded-lg overflow-hidden bg-gray-200 shrink-0">
-          <img
+          <BlogCoverImage
             src={item.image}
             alt={item.title}
             className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
@@ -170,7 +195,7 @@ function BlogCard({
     <Link href={href} className="group block">
       <article className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg hover:border-primary/20 transition h-full flex flex-col">
         <div className="relative aspect-[16/10] bg-gray-200 overflow-hidden">
-          <img
+          <BlogCoverImage
             src={item.image}
             alt={item.title}
             className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
