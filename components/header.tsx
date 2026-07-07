@@ -118,7 +118,7 @@ export default function Header() {
 
   // On sub-pages, always use solid white background with dark text
   const solidHeader = isSubPage || isScrolled;
-  const bgClass = solidHeader ? 'bg-white shadow-md' : 'bg-transparent';
+  const bgClass = solidHeader ? 'bg-white shadow-md' : 'bg-black/10 backdrop-blur-sm';
   const textClass = solidHeader ? 'text-gray-900' : 'text-white';
   const logoColorClass = solidHeader ? 'text-primary' : 'text-white';
   const hoverClass = solidHeader ? 'hover:text-primary' : 'hover:text-accent';

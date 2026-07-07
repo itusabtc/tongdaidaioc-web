@@ -105,7 +105,7 @@ export default function BrokerPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
 
-      <main className="flex-1 pt-0">
+      <main className="flex-1">
         {/* Hero Banner */}
         <HeroBanner
           title="Công cụ quản lý dành cho Môi giới"

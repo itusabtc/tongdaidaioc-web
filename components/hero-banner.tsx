@@ -26,14 +26,14 @@ export default function HeroBanner({
 
   return (
     <div
-      className={`relative w-full ${heightClasses[height]} bg-cover bg-center overflow-hidden -mt-16`}
+      className={`relative w-full ${heightClasses[height]} bg-cover bg-center overflow-hidden pt-16 mt-0 z-20`}
       style={{
         backgroundImage: `linear-gradient(135deg, rgba(30, 58, 95, 0.85), rgba(30, 58, 95, 0.75)), url('${backgroundImage}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center">
+      <div className="h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-balance">
           {title}
         </h1>
