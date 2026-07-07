@@ -13,6 +13,10 @@ export default function ListingOverview({ descriptionHtml, isExpanded = false }:
 
   if (!descriptionHtml) return null;
 
+  // Strip HTML tags to get actual character count for truncation check
+  const plainText = descriptionHtml.replace(/<[^>]*>/g, '');
+  const shouldShowViewMore = plainText.length > 500;
+
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       <button
@@ -32,7 +36,7 @@ export default function ListingOverview({ descriptionHtml, isExpanded = false }:
             className="prose prose-sm max-w-none text-gray-700 line-clamp-6"
             dangerouslySetInnerHTML={{ __html: descriptionHtml }}
           />
-          {descriptionHtml.length > 500 && (
+          {shouldShowViewMore && (
             <button className="text-primary font-semibold mt-4 hover:underline text-sm">
               Xem thêm
             </button>

@@ -228,6 +228,8 @@ export default async function ListingPage({ params }: Props) {
         addressText={listing.addressText}
         publishedAt={listing.publishedAt}
         priceText={listing.priceText}
+        contactName={listing.contactName}
+        contactPhone={listing.contactPhone}
       />
     </main>
   );

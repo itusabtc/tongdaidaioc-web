@@ -18,7 +18,7 @@ export default function ListingFactsTable({ facts }: ListingFactsTableProps) {
         <tbody>
           {filteredFacts.map((fact, idx) => (
             <tr
-              key={idx}
+              key={`${fact.label}-${idx}`}
               className={`${
                 idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'
               } border-b border-gray-200 last:border-b-0 hover:bg-gray-100 transition`}

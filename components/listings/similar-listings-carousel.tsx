@@ -30,10 +30,14 @@ export default function SimilarListingsCarousel({
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
     const scrollAmount = 400;
-    if (direction === 'left') {
-      scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    const scrollOptions = { left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' as const };
+    
+    // Use scrollBy with fallback for older browsers
+    if ('scrollBy' in scrollRef.current) {
+      scrollRef.current.scrollBy(scrollOptions);
     } else {
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      // Fallback: use scrollLeft directly
+      scrollRef.current.scrollLeft += direction === 'left' ? -scrollAmount : scrollAmount;
     }
   };
 
@@ -80,6 +84,7 @@ export default function SimilarListingsCarousel({
                   src={listing.coverUrl || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'}
                   alt={listing.title}
                   fill
+                  loading="lazy"
                   className="object-cover group-hover:scale-105 transition duration-300"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400';

@@ -9,6 +9,8 @@ interface ListingJsonLdProps {
   addressText?: string;
   publishedAt?: string;
   priceText: string;
+  contactName?: string;
+  contactPhone?: string;
 }
 
 export default function ListingJsonLd({
@@ -22,6 +24,8 @@ export default function ListingJsonLd({
   addressText,
   publishedAt,
   priceText,
+  contactName,
+  contactPhone,
 }: ListingJsonLdProps) {
   const schema = {
     '@context': 'https://schema.org',
@@ -46,6 +50,13 @@ export default function ListingJsonLd({
       addressCountry: 'VN',
     },
     datePublished: publishedAt || new Date().toISOString(),
+    ...(contactName && {
+      realEstateAgent: {
+        '@type': 'RealEstateAgent',
+        name: contactName,
+        ...(contactPhone && { telephone: contactPhone }),
+      },
+    }),
   };
 
   return (
