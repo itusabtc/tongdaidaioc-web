@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MessageCircle, Phone, AlertCircle } from 'lucide-react';
+import { formatRentPeriod } from '@/lib/listing-format';
 
 interface ContactSidebarProps {
   priceText: string;
@@ -22,14 +23,15 @@ export default function ListingContactSidebar({
 }: ContactSidebarProps) {
   const [showContactForm, setShowContactForm] = useState(false);
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
+  const rentPeriodLabel = formatRentPeriod(rentPeriod);
 
   return (
     <div className="sticky top-24 space-y-4">
       {/* Price Card */}
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
         <p className="text-4xl font-bold text-primary">{priceText}</p>
-        {rentPeriod && (
-          <p className="text-gray-600 text-sm mt-1">/ {rentPeriod}</p>
+        {rentPeriodLabel && (
+          <p className="text-gray-600 text-sm mt-1">/ {rentPeriodLabel}</p>
         )}
 
         {/* Badges */}

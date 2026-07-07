@@ -68,6 +68,13 @@ export default function ListingMap({ latitude, longitude, addressText, title }: 
 
       L.marker([lat, lng]).addTo(map.current).bindPopup(popupContainer).openPopup();
     }
+
+    return () => {
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
+    };
   }, [latitude, longitude, addressText, title]);
 
   return (

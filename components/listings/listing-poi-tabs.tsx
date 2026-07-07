@@ -10,8 +10,8 @@ interface POI {
   category: 'school' | 'hospital' | 'restaurant' | 'shopping' | 'other';
 }
 
+// Bản đồ thật nằm ở ListingMap phía trên — không lặp tab placeholder
 const tabs = [
-  { id: 'map', label: 'Bản đồ', icon: MapPin },
   { id: 'school', label: 'Trường học', icon: School },
   { id: 'hospital', label: 'Bệnh viện', icon: Hospital },
   { id: 'restaurant', label: 'Ăn uống', icon: Utensils },
@@ -48,7 +48,7 @@ const mockPOIs: Record<string, POI[]> = {
 };
 
 export default function ListingPoiTabs() {
-  const [activeTab, setActiveTab] = useState('map');
+  const [activeTab, setActiveTab] = useState('school');
 
   const pois = mockPOIs[activeTab] || [];
 
@@ -78,12 +78,7 @@ export default function ListingPoiTabs() {
 
       {/* Content */}
       <div className="p-6">
-        {activeTab === 'map' ? (
-          <div className="text-center py-8 text-gray-600">
-            <MapPin size={32} className="mx-auto mb-2 opacity-50" />
-            <p>Bản đồ sẽ hiển thị tại đây</p>
-          </div>
-        ) : pois.length > 0 ? (
+        {pois.length > 0 ? (
           <div className="space-y-3">
             {pois.map((poi) => (
               <div

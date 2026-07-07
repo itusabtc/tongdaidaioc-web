@@ -12,6 +12,7 @@ import SimilarListingsCarousel from '@/components/listings/similar-listings-caro
 import ListingJsonLd from '@/components/listings/listing-json-ld';
 import ListingPoiTabs from '@/components/listings/listing-poi-tabs';
 import { getListing, getSimilar } from '@/lib/api';
+import { formatRentPeriod } from '@/lib/listing-format';
 import { mockListings } from '@/lib/mock/listings';
 
 interface Props {
@@ -98,7 +99,8 @@ export default async function ListingPage({ params }: Props) {
   const publishedAtLabel = listing.publishedAt
     ? new Date(listing.publishedAt).toLocaleDateString('vi-VN')
     : undefined;
-  const priceLabel = listing.rentPeriod ? `${listing.priceText} / ${listing.rentPeriod}` : listing.priceText;
+  const rentPeriodLabel = formatRentPeriod(listing.rentPeriod);
+  const priceLabel = rentPeriodLabel ? `${listing.priceText} / ${rentPeriodLabel}` : listing.priceText;
 
   return (
     <main className="min-h-screen bg-white">
@@ -162,7 +164,7 @@ export default async function ListingPage({ params }: Props) {
               <ListingAmenities amenities={amenities} />
 
               {listing.descriptionHtml && (
-                <div className="border border-gray-200 rounded-lg p-6">
+                <div id="mo-ta-chi-tiet" className="border border-gray-200 rounded-lg p-6 scroll-mt-24">
                   <h3 className="text-lg font-bold mb-4 text-gray-900">Mô tả chi tiết</h3>
                   <div
                     className="prose prose-sm max-w-none text-gray-700"
