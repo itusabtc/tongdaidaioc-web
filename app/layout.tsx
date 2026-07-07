@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Be_Vietnam_Pro } from 'next/font/google'
 import './globals.css'
-import { OrganizationSchema, LocalBusinessSchema, RealEstateListingSchema } from '@/components/json-ld'
+import { SiteJsonLd } from '@/components/json-ld'
 
 const beVietnamPro = Be_Vietnam_Pro({ subsets: ['latin', 'vietnamese'], weight: ['400', '500', '600', '700'] })
 
@@ -69,18 +69,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi" className="bg-white">
-      <head>
-        <OrganizationSchema />
-        <LocalBusinessSchema />
-        <RealEstateListingSchema />
-        <link rel="canonical" href="https://tongdaidiaoc.vn" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="vi_VN" />
-      </head>
+    <html lang="vi" className="bg-white" suppressHydrationWarning>
       <body className={`${beVietnamPro.className} antialiased bg-white`}>
+        <SiteJsonLd />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
