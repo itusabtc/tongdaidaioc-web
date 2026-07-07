@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface ListingCardProps {
   listing: {
@@ -18,18 +21,19 @@ const PLACEHOLDER_COVER =
   'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&h=400&fit=crop';
 
 export default function ListingCard({ listing }: ListingCardProps) {
+  const [imgSrc, setImgSrc] = useState(listing.coverUrl || PLACEHOLDER_COVER);
+
   return (
     <Link href={`/tin/${listing.slug}`}>
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer h-full flex flex-col">
-        {/* Image */}
         <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
           <img
-            src={listing.coverUrl || PLACEHOLDER_COVER}
+            src={imgSrc}
             alt={listing.title}
             className="w-full h-full object-cover hover:scale-105 transition duration-300"
+            onError={() => setImgSrc(PLACEHOLDER_COVER)}
           />
 
-          {/* Badges */}
           {listing.sourceType === 'chinhchu' && (
             <div className="absolute top-2 left-2">
               <span className="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded">
@@ -55,7 +59,6 @@ export default function ListingCard({ listing }: ListingCardProps) {
           )}
         </div>
 
-        {/* Content */}
         <div className="p-4 flex-1 flex flex-col">
           <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 text-sm">
             {listing.title}
