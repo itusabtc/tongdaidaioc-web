@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import HeroBanner from '@/components/hero-banner';
 import ListingCard from '@/components/listings/listing-card';
 import { getListings } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
@@ -41,17 +42,28 @@ export default async function BuySellPage({ searchParams }: Props) {
   return (
     <main className="min-h-screen bg-white">
       <Header />
-      <div className="pt-16">
-        {/* Hero / Breadcrumb */}
-        <section className="section-spacing border-b border-gray-200">
+      
+      {/* Hero Banner */}
+      <HeroBanner
+        title="Mua bán nhà đất TP.HCM"
+        subtitle="Tìm kiếm hàng nghìn tin đăng từ chủ nhà và môi giới — Đăng tin miễn phí, AI hỗ trợ"
+        backgroundImage="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&h=500&fit=crop"
+        height="medium"
+        cta={{
+          label: 'Đăng tin bán ngay',
+          href: '/chu-nha/dang-tin',
+        }}
+      />
+
+      <div className="pt-0">
+        {/* Breadcrumb */}
+        <section className="px-4 sm:px-6 lg:px-8 py-6 border-b border-gray-200">
           <div className="max-w-7xl mx-auto">
-            <nav className="flex gap-2 text-sm text-gray-600 mb-6">
+            <nav className="flex gap-2 text-sm text-gray-600">
               <a href="/" className="hover:text-primary">Trang chủ</a>
               <span>/</span>
               <span className="text-gray-900 font-semibold">Mua bán</span>
             </nav>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Mua bán nhà đất</h1>
-            <p className="text-gray-600 text-lg">{total} tin đăng</p>
           </div>
         </section>
 

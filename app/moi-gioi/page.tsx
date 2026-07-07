@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Check, TrendingUp, Users, Zap } from 'lucide-react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import HeroBanner from '@/components/hero-banner';
 
 export const metadata = {
   title: 'Dành cho Môi giới - Tổng Đài Địa Ốc',
@@ -104,20 +105,25 @@ export default function BrokerPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
 
-      <main className="flex-1 pt-20">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary to-blue-900 text-white py-20">
+      <main className="flex-1 pt-0">
+        {/* Hero Banner */}
+        <HeroBanner
+          title="Công cụ quản lý dành cho Môi giới"
+          subtitle="CRM + Analytics + Công cụ marketing — Quản lý tin, khách hàng, và doanh số từ một nền tảng"
+          backgroundImage="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=500&fit=crop"
+          height="large"
+          cta={{
+            label: 'Khám phá tính năng',
+            href: '/moi-gioi',
+          }}
+        />
+
+        {/* CTA Section */}
+        <section className="bg-gray-50 py-8 border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Dành cho Môi giới
-              </h1>
-              <p className="text-xl text-gray-100 mb-8 max-w-2xl mx-auto">
-                Công cụ quản lý, marketing, và hỗ trợ kinh doanh toàn diện
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/moi-gioi/cong-cu"
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/moi-gioi/cong-cu"
                   className="px-8 py-3 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition"
                 >
                   Khám phá công cụ
@@ -128,7 +134,6 @@ export default function BrokerPage() {
                 >
                   Liên hệ tư vấn
                 </a>
-              </div>
             </div>
           </div>
         </section>

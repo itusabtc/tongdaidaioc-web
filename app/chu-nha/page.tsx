@@ -1,5 +1,6 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import HeroBanner from '@/components/hero-banner';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
@@ -46,18 +47,20 @@ export default function ChuNhaPage() {
   return (
     <>
       <Header />
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-50 to-orange-50 py-16 md:py-24">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-              Dành cho chủ nhà
-            </h1>
-            <p className="text-lg text-gray-700 mb-8 max-w-2xl">
-              Các công cụ và dịch vụ hoàn chỉnh giúp chủ nhà bán và cho thuê bất động sản một cách hiệu quả và dễ dàng
-            </p>
-          </div>
-        </section>
+      
+      {/* Hero Banner */}
+      <HeroBanner
+        title="Dành cho chủ nhà"
+        subtitle="Đăng tin miễn phí, AI hỗ trợ nội dung, kết nối người mua/thuê — Sân chơi giao dịch BĐS"
+        backgroundImage="https://images.unsplash.com/photo-1560531676-2d76fb0b0e4e?w=1200&h=500&fit=crop"
+        height="large"
+        cta={{
+          label: 'Đăng tin miễn phí',
+          href: '/chu-nha/dang-tin',
+        }}
+      />
+
+      <main className="pt-0">
 
         {/* Features Grid */}
         <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
