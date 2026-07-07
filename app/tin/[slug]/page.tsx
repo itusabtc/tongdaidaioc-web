@@ -82,9 +82,22 @@ export default async function ListingPage({ params }: Props) {
     );
   }
 
-  const images = listing.images || [listing.coverUrl || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800'];
+  const images = listing.images?.length
+    ? listing.images
+    : [listing.coverUrl || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800'];
   const amenities = listing.amenities || [];
   const districtName = listing.districtName || listing.wardName || 'TP.HCM';
+  const listingTypeLabel = listing.listingType === 'sale' ? 'Bán' : 'Cho thuê';
+  const sourceTypeLabel =
+    listing.sourceType === 'chinhchu'
+      ? 'Chính chủ'
+      : listing.sourceType === 'moigioi'
+        ? 'Môi giới'
+        : undefined;
+  const publishedAtLabel = listing.publishedAt
+    ? new Date(listing.publishedAt).toLocaleDateString('vi-VN')
+    : undefined;
+  const priceLabel = listing.rentPeriod ? `${listing.priceText} / ${listing.rentPeriod}` : listing.priceText;
 
   return (
     <main className="min-h-screen bg-white">
@@ -136,7 +149,12 @@ export default async function ListingPage({ params }: Props) {
                   { label: 'Phòng tắm', value: listing.bathrooms },
                   { label: 'Diện tích', value: listing.area ? `${listing.area} m²` : undefined },
                   { label: 'Khu vực', value: districtName },
-                  { label: 'Giá', value: listing.priceText },
+                  { label: 'Phường', value: listing.wardName },
+                  { label: 'Địa chỉ', value: listing.addressText },
+                  { label: 'Loại tin', value: listingTypeLabel },
+                  { label: 'Nguồn', value: sourceTypeLabel },
+                  { label: 'Ngày đăng', value: publishedAtLabel },
+                  { label: 'Giá', value: priceLabel },
                 ]}
               />
 

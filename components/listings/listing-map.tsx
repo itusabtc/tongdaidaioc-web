@@ -55,10 +55,18 @@ export default function ListingMap({ latitude, longitude, addressText, title }: 
         maxZoom: 19,
       }).addTo(map.current);
 
-      L.marker([lat, lng])
-        .bindPopup(`<strong>${title || 'Vị trí'}</strong><br>${addressText || 'TP.HCM'}`)
-        .addTo(map.current)
-        .openPopup();
+      const safeTitle = title || 'Vị trí';
+      const safeAddress = addressText || 'TP.HCM';
+      const popupContainer = document.createElement('div');
+      const strong = document.createElement('strong');
+      strong.textContent = safeTitle;
+      const br = document.createElement('br');
+      const addressNode = document.createTextNode(safeAddress);
+      popupContainer.appendChild(strong);
+      popupContainer.appendChild(br);
+      popupContainer.appendChild(addressNode);
+
+      L.marker([lat, lng]).addTo(map.current).bindPopup(popupContainer).openPopup();
     }
   }, [latitude, longitude, addressText, title]);
 
