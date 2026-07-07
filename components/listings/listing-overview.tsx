@@ -10,6 +10,7 @@ interface ListingOverviewProps {
 
 export default function ListingOverview({ descriptionHtml, isExpanded = false }: ListingOverviewProps) {
   const [expanded, setExpanded] = useState(isExpanded);
+  const [isContentExpanded, setIsContentExpanded] = useState(false);
 
   if (!descriptionHtml) return null;
 
@@ -33,12 +34,15 @@ export default function ListingOverview({ descriptionHtml, isExpanded = false }:
       {expanded && (
         <div className="p-6 border-t border-gray-200 bg-white">
           <div
-            className="prose prose-sm max-w-none text-gray-700 line-clamp-6"
+            className={`prose prose-sm max-w-none text-gray-700 ${isContentExpanded ? '' : 'line-clamp-6'}`}
             dangerouslySetInnerHTML={{ __html: descriptionHtml }}
           />
           {shouldShowViewMore && (
-            <button className="text-primary font-semibold mt-4 hover:underline text-sm">
-              Xem thêm
+            <button
+              onClick={() => setIsContentExpanded(!isContentExpanded)}
+              className="text-primary font-semibold mt-4 hover:underline text-sm"
+            >
+              {isContentExpanded ? 'Thu gọn' : 'Xem thêm'}
             </button>
           )}
         </div>

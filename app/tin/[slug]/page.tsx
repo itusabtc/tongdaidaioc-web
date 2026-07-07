@@ -27,14 +27,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
     const listing = await getListing(slug);
+    const location = listing.districtName || listing.wardName || 'TP.HCM';
     return {
       title: `${listing.title} - Tổng Đài Địa Ốc`,
-      description: `${listing.title}. ${listing.area}m², giá ${listing.priceText}. ${listing.districtName}`,
+      description: `${listing.title}. ${listing.area}m², giá ${listing.priceText}. ${location}`,
       canonical: `https://tongdaidiaoc.vn/tin/${listing.slug}`,
       openGraph: {
         type: 'website',
         title: listing.title,
-        description: `${listing.propertyTypeName} tại ${listing.districtName}`,
+        description: `${listing.propertyTypeName} tại ${location}`,
         images: [listing.coverUrl || listing.images?.[0] || ''],
       },
     };
