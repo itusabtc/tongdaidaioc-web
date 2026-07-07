@@ -7,8 +7,8 @@ import { OrganizationSchema, LocalBusinessSchema, RealEstateListingSchema } from
 const beVietnamPro = Be_Vietnam_Pro({ subsets: ['latin', 'vietnamese'], weight: ['400', '500', '600', '700'] })
 
 export const metadata: Metadata = {
-  title: 'Tổng Đài Địa Ốc - Nền tảng bất động sản trực tuyến hàng đầu Việt Nam',
-  description: 'Tìm kiếm, mua bán, cho thuê nhà đất, căn hộ trên Tổng Đài Địa Ốc. 12,340+ tin đăng xác thực, công cụ dành cho môi giới, hỗ trợ 24/7.',
+  title: 'Tổng Đài Địa Ốc - Sân chơi mua bán & cho thuê bất động sản',
+  description: 'Đăng tin miễn phí, tìm kiếm nhà đất TP.HCM trên TDDO. AI hỗ trợ đăng tin và kết nối người mua, người bán.',
   keywords: 'bất động sán, mua bán nhà, cho thuê căn hộ, Tổng Đài Địa Ốc, Vietnam',
   authors: [{ name: 'Tổng Đài Địa Ốc' }],
   creator: 'Tổng Đài Địa Ốc',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     url: 'https://tongdaidiaoc.vn',
     siteName: 'Tổng Đài Địa Ốc',
     title: 'Tổng Đài Địa Ốc - Mua bán, cho thuê bất động sản',
-    description: 'Nền tảng bất động sản hàng đầu với 12,340+ tin đăng xác thực',
+    description: 'Sân chơi bất động sản — đăng tin nhanh, AI hỗ trợ kết nối người mua & bán',
     images: [
       {
         url: '/og-image.jpg',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Tổng Đài Địa Ốc - Mua bán nhà đất',
-    description: 'Đăng tin miễn phí, tìm kiếm bất động sán xác thực',
+    description: 'Đăng tin miễn phí, tìm nhà đất TP.HCM với AI hỗ trợ trên TDDO',
     images: ['/og-image.jpg'],
   },
   icons: {

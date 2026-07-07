@@ -4,8 +4,8 @@ import Footer from '@/components/footer';
 import { Calendar, User } from 'lucide-react';
 
 export const metadata = {
-  title: 'Tin tức & Bài viết - TDDO',
-  description: 'Bài viết, hướng dẫn, tin thị trường về bất động sán. Cập nhật xu hướng mới nhất.',
+  title: 'Blogs - TDDO',
+  description: 'Tin tức, xu hướng và hướng dẫn bất động sản — tổng hợp trên Tổng Đài Địa Ốc.',
 };
 
 export default function ArticlesPage() {

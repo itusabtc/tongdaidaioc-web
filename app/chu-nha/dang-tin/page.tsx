@@ -68,7 +68,7 @@ export default function DangTinPage() {
               Chủ nhà đăng tin siêu dễ
             </h1>
             <p className="text-lg md:text-xl text-blue-100 max-w-2xl">
-              Chỉ 3 bước đơn giản, tin của bạn sẽ hiển thị cho hàng ngàn người tìm kiếm. Công nghệ AI tiên tiến hỗ trợ mỗi bước.
+              Chỉ 3 bước đơn giản, tin của bạn sẽ hiển thị cho hàng ngàn người tìm kiếm. AI hỗ trợ từng bước đăng tin.
             </p>
           </div>
         </section>
@@ -113,7 +113,7 @@ export default function DangTinPage() {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-                Công nghệ AI tiên tiến hỗ trợ đăng tin
+                AI hỗ trợ đăng tin
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 Chúng tôi sử dụng các công nghệ AI hiện đại nhất để giúp tin của bạn đứng vị trí cao, thu hút nhiều khách hàng tiềm năng
@@ -206,7 +206,7 @@ export default function DangTinPage() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-primary mb-2">Công nghệ AI tiên tiến</h3>
+                  <h3 className="font-bold text-primary mb-2">AI hỗ trợ đăng tin</h3>
                   <p className="text-gray-600">Sử dụng AI để tối ưu hóa tin của bạn, thu hút nhiều khách hơn</p>
                 </div>
               </div>

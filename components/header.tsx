@@ -117,10 +117,11 @@ export default function Header() {
   ];
 
   // On sub-pages, always use solid white background with dark text
-  const bgClass = isSubPage || isScrolled ? 'bg-white shadow-md' : 'bg-transparent';
-  const textClass = isSubPage || isScrolled ? 'text-gray-900' : 'text-white';
-  const logoColorClass = isSubPage || isScrolled ? 'text-primary' : 'text-white';
-  const hoverClass = isSubPage || isScrolled ? 'hover:text-primary' : 'hover:text-accent';
+  const solidHeader = isSubPage || isScrolled;
+  const bgClass = solidHeader ? 'bg-white shadow-md' : 'bg-transparent';
+  const textClass = solidHeader ? 'text-gray-900' : 'text-white';
+  const logoColorClass = solidHeader ? 'text-primary' : 'text-white';
+  const hoverClass = solidHeader ? 'hover:text-primary' : 'hover:text-accent';
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${bgClass}`}>
@@ -191,7 +192,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className={`lg:hidden border-t ${isScrolled ? 'border-gray-200' : 'border-white/20'} py-4 ${isScrolled ? 'bg-white' : 'bg-primary'}`}>
+          <nav className={`lg:hidden border-t ${solidHeader ? 'border-gray-200' : 'border-white/20'} py-4 ${solidHeader ? 'bg-white' : 'bg-primary'}`}>
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <div key={item.key}>
@@ -208,7 +209,7 @@ export default function Header() {
                         <Link
                           key={idx}
                           href={subItem.href}
-                          className={`block text-sm py-1 ${isScrolled ? 'text-gray-700 hover:text-accent' : 'text-gray-200 hover:text-accent'}`}
+                          className={`block text-sm py-1 ${solidHeader ? 'text-gray-700 hover:text-accent' : 'text-gray-200 hover:text-accent'}`}
                         >
                           {subItem.label}
                         </Link>
@@ -217,7 +218,7 @@ export default function Header() {
                   )}
                 </div>
               ))}
-              <div className={`pt-4 ${isScrolled ? 'border-gray-200' : 'border-gray-400'} border-t space-y-2`}>
+              <div className={`pt-4 ${solidHeader ? 'border-gray-200' : 'border-gray-400'} border-t space-y-2`}>
                 <AuthMenu />
               </div>
             </div>

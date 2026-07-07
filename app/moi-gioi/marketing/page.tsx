@@ -28,7 +28,7 @@ export default function BrokerMarketingPage() {
     {
       icon: Award,
       title: 'Xây dựng uy tín',
-      description: 'Hỗ trợ xác thực tài khoản, lập hồ sơ chuyên nghiệp',
+      description: 'Hỗ trợ lập hồ sơ môi giới chuyên nghiệp trên TDDO',
     },
   ];
 
@@ -157,7 +157,7 @@ export default function BrokerMarketingPage() {
         <section className="py-16 bg-accent text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Cần tư vấn marketing?</h2>
-            <p className="text-lg mb-8">Liên hệ với đội ngũ chuyên gia của chúng tôi</p>
+            <p className="text-lg mb-8">Liên hệ hỗ trợ CRM & công cụ môi giới trên TDDO</p>
             <a
               href="tel:1800234546"
               className="inline-block px-8 py-3 bg-white text-accent font-semibold rounded-lg hover:bg-gray-100 transition"

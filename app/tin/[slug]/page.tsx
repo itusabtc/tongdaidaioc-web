@@ -110,8 +110,8 @@ export default async function ListingPage({ params }: Props) {
                 <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
                   <CheckCircle className="text-green-600" size={20} />
                   <div>
-                    <p className="font-semibold text-green-900">Tin xác thực TDDO</p>
-                    <p className="text-sm text-green-700">Thông tin đã được xác minh</p>
+                    <p className="font-semibold text-green-900">Tin chính chủ trên TDDO</p>
+                    <p className="text-sm text-green-700">Chủ nhà đã xác nhận đăng tin trên nền tảng</p>
                   </div>
                 </div>
               )}
@@ -257,10 +257,10 @@ export default async function ListingPage({ params }: Props) {
                 <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
                   <h4 className="font-bold text-yellow-900 mb-2 text-sm">Mẹo an toàn</h4>
                   <ul className="text-xs text-yellow-800 space-y-1">
-                    <li>✓ Không gửi tiền trước khi xem nhà</li>
-                    <li>✓ Kiểm tra pháp lý trước khi mua</li>
-                    <li>✓ Gặp trực tiếp để xác nhận</li>
-                    <li>✓ Yêu cầu giấy tờ hợp pháp</li>
+                    <li>✓ Gặp trực tiếp và xem nhà trước khi quyết định</li>
+                    <li>✓ Tự tìm hiểu thông tin pháp lý với chuyên gia độc lập</li>
+                    <li>✓ Không chuyển tiền khi chưa kiểm tra tài sản</li>
+                    <li>✓ Yêu cầu xem giấy tờ liên quan đến tài sản</li>
                   </ul>
                 </div>
               </div>

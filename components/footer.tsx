@@ -240,7 +240,7 @@ export default function Footer() {
                 Copyright © {currentYear} Tổng Đài Địa Ốc. All rights reserved.
               </p>
               <p className="text-gray-400 text-xs mt-1">
-                Nền tảng bất động sán trực tuyến hàng đầu Việt Nam
+                Nền tảng hỗ trợ mua bán & cho thuê bất động sản tại Việt Nam
               </p>
             </div>
           </div>

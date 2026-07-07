@@ -14,23 +14,20 @@ interface ListingCardProps {
   };
 }
 
+const PLACEHOLDER_COVER =
+  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&h=400&fit=crop';
+
 export default function ListingCard({ listing }: ListingCardProps) {
   return (
     <Link href={`/tin/${listing.slug}`}>
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer h-full flex flex-col">
         {/* Image */}
         <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
-          {listing.coverUrl ? (
-            <img
-              src={listing.coverUrl}
-              alt={listing.title}
-              className="w-full h-full object-cover hover:scale-105 transition duration-300"
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-              <span className="text-gray-400">No image</span>
-            </div>
-          )}
+          <img
+            src={listing.coverUrl || PLACEHOLDER_COVER}
+            alt={listing.title}
+            className="w-full h-full object-cover hover:scale-105 transition duration-300"
+          />
 
           {/* Badges */}
           {listing.sourceType === 'chinhchu' && (
@@ -51,8 +48,8 @@ export default function ListingCard({ listing }: ListingCardProps) {
 
           {(listing.isOwnerVerified || listing.verified) && (
             <div className="absolute top-2 right-2">
-              <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded">
-                Đã xác thực
+              <span className="inline-block px-2 py-1 bg-amber-100 text-amber-900 text-xs font-semibold rounded">
+                Chủ nhà xác nhận
               </span>
             </div>
           )}

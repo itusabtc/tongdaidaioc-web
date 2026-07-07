@@ -189,7 +189,7 @@ export default function BrokerCommunityPage() {
         <section className="py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center mb-12">
-              Các môi giới hàng đầu
+              Môi giới nổi bật trên TDDO
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {topBrokers.map((broker, index) => (
@@ -222,7 +222,7 @@ export default function BrokerCommunityPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { icon: '🤝', title: 'Kết nối', desc: 'Gặp gỡ và hợp tác với các môi giới khác' },
-                { icon: '📚', title: 'Học hỏi', desc: 'Tiếp cận kiến thức từ những chuyên gia hàng đầu' },
+                { icon: '📚', title: 'Học hỏi', desc: 'Chia sẻ kinh nghiệm từ cộng đồng môi giới TDDO' },
                 { icon: '🏆', title: 'Giải thưởng', desc: 'Giải thưởng hàng tháng cho các thành viên xuất sắc' },
               ].map((benefit, idx) => (
                 <div key={idx} className="text-center">

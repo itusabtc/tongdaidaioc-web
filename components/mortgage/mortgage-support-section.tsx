@@ -7,6 +7,9 @@ interface MortgageSupportSectionProps {
   articles: MortgageArticle[];
 }
 
+const FALLBACK_MORTGAGE_IMAGE =
+  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop';
+
 export default function MortgageSupportSection({ articles }: MortgageSupportSectionProps) {
   return (
     <div>
@@ -22,7 +25,7 @@ export default function MortgageSupportSection({ articles }: MortgageSupportSect
           >
             <div className="relative w-28 h-20 md:w-32 md:h-24 rounded-lg overflow-hidden shrink-0 flex-shrink-0">
               <Image
-                src={article.imageUrl}
+                src={article.imageUrl || FALLBACK_MORTGAGE_IMAGE}
                 alt={article.title}
                 fill
                 className="object-cover group-hover:scale-105 transition duration-300"

@@ -223,7 +223,7 @@ export default function BrokerGuidePage() {
         <section className="py-16 bg-accent text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Cần giúp đỡ?</h2>
-            <p className="text-lg mb-8">Liên hệ với đội ngũ hỗ trợ của chúng tôi</p>
+            <p className="text-lg mb-8">Liên hệ hỗ trợ kỹ thuật trên TDDO</p>
             <Link
               href="/lien-he"
               className="inline-block px-8 py-3 bg-white text-accent font-semibold rounded-lg hover:bg-gray-100 transition"
