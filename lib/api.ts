@@ -341,8 +341,23 @@ export async function getMortgageArticles(): Promise<MortgageArticle[]> {
 /** Tin báo BĐS từ RSS — link ngoài (homepage Blogs). */
 export interface BlogFeedItem {
   id: string;
+  slug: string;
   title: string;
   excerpt: string;
+  imageUrl?: string | null;
+  publishedAt?: string | null;
+  category?: string | null;
+  sourceName: string;
+  sourceUrl: string;
+  href: string;
+}
+
+export interface BlogFeedDetail {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  bodyHtml?: string | null;
   imageUrl?: string | null;
   publishedAt?: string | null;
   category?: string | null;
@@ -352,6 +367,10 @@ export interface BlogFeedItem {
 
 export async function getBlogFeed(limit = 8): Promise<BlogFeedItem[]> {
   return apiFetch<BlogFeedItem[]>(`/home/blog-feed?limit=${limit}`);
+}
+
+export async function getBlogFeedDetail(slug: string): Promise<BlogFeedDetail> {
+  return apiFetch<BlogFeedDetail>(`/home/blog-feed/${encodeURIComponent(slug)}`);
 }
 
 export async function getContent(slug: string): Promise<SiteContentDetail> {

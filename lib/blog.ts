@@ -9,6 +9,7 @@ export interface BlogItem {
   source: string;
   excerpt?: string;
   href?: string;
+  /** true = mở tab ngoài; false/undefined = điều hướng trong site */
   external?: boolean;
 }
 
@@ -28,6 +29,7 @@ export function mapBlogFeedToItems(feed: BlogFeedItem[]): BlogItem[] {
         ? published.toLocaleDateString('vi-VN')
         : '';
     const catKey = (item.category || 'bat-dong-san').toLowerCase();
+    const href = item.href || (item.slug ? `/tin-tuc/${item.slug}` : '/tin-tuc');
     return {
       id: item.id,
       title: item.title,
@@ -36,8 +38,8 @@ export function mapBlogFeedToItems(feed: BlogFeedItem[]): BlogItem[] {
       category: CATEGORY_LABELS[catKey] || item.category || 'Bất động sản',
       source: item.sourceName,
       excerpt: item.excerpt || undefined,
-      href: item.sourceUrl,
-      external: /^https?:\/\//i.test(item.sourceUrl),
+      href,
+      external: false,
     };
   });
 }
