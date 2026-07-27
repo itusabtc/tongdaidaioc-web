@@ -37,7 +37,15 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
     headers.set('Authorization', `Bearer ${token}`);
   }
 
-  const res = await fetch(`${BASE}${path}`, { ...init, headers });
+  // SSR không được treo vô hạn khi API chậm / extract bài báo
+  const timeoutMs = typeof window === 'undefined' ? 12_000 : 30_000;
+  const signal =
+    init?.signal ??
+    (typeof AbortSignal !== 'undefined' && 'timeout' in AbortSignal
+      ? AbortSignal.timeout(timeoutMs)
+      : undefined);
+
+  const res = await fetch(`${BASE}${path}`, { ...init, headers, signal });
   
   if (!res.ok) {
     const err = await res.json().catch(() => null);

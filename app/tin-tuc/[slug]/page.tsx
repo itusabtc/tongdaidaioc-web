@@ -25,90 +25,122 @@ const legacyArticles: Record<
   },
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+async function loadArticle(slug: string): Promise<{
+  title: string;
+  category: string;
+  sourceName: string;
+  sourceUrl: string | null;
+  date: string;
+  bodyHtml: string | null;
+  plainContent: string | null;
+  imageUrl: string | null;
+  bankName: string | null;
+  found: boolean;
+}> {
   try {
     const blog = await getBlogFeedDetail(slug);
     return {
-      title: `${blog.title} - Tổng Đài Địa Ốc`,
-      description: blog.excerpt || blog.title,
+      title: blog.title,
+      category: blog.category === 'kinh-te' ? 'Kinh tế' : 'Bất động sản',
+      sourceName: blog.sourceName,
+      sourceUrl: blog.sourceUrl,
+      date: blog.publishedAt || new Date().toISOString(),
+      bodyHtml: blog.bodyHtml ?? null,
+      plainContent: null,
+      imageUrl: blog.imageUrl ?? null,
+      bankName: null,
+      found: true,
     };
   } catch {
-    try {
-      const content = await getContent(slug);
-      return {
-        title: `${content.title} - Tổng Đài Địa Ốc`,
-        description: content.title,
-      };
-    } catch {
-      const legacy = legacyArticles[slug];
-      return {
-        title: legacy ? `${legacy.title} - Tổng Đài Địa Ốc` : 'Bài viết - TDDO',
-      };
-    }
+    /* fall through */
   }
+
+  try {
+    const content = await getContent(slug);
+    return {
+      title: content.title,
+      category: content.contentType === 'mortgage' ? 'Hỗ trợ vay' : 'Tin tức',
+      sourceName: 'Tổng Đài Địa Ốc',
+      sourceUrl: null,
+      date: new Date().toISOString().slice(0, 10),
+      bodyHtml: content.bodyHtml ?? null,
+      plainContent: null,
+      imageUrl: content.imageUrl ?? null,
+      bankName: content.bankName ?? null,
+      found: true,
+    };
+  } catch {
+    /* fall through */
+  }
+
+  const legacy = legacyArticles[slug];
+  if (legacy) {
+    return {
+      title: legacy.title,
+      category: legacy.category,
+      sourceName: legacy.author,
+      sourceUrl: null,
+      date: legacy.date,
+      bodyHtml: null,
+      plainContent: legacy.content,
+      imageUrl: null,
+      bankName: null,
+      found: true,
+    };
+  }
+
+  return {
+    title: 'Bài viết',
+    category: 'Tin tức',
+    sourceName: 'Tổng Đài Địa Ốc',
+    sourceUrl: null,
+    date: new Date().toISOString().slice(0, 10),
+    bodyHtml: null,
+    plainContent: null,
+    imageUrl: null,
+    bankName: null,
+    found: false,
+  };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await loadArticle(slug);
+  return {
+    title: article.found ? `${article.title} - Tổng Đài Địa Ốc` : 'Bài viết - TDDO',
+    description: article.title,
+  };
 }
 
 export default async function ArticleDetailPage({ params }: Props) {
   const { slug } = await params;
 
-  let title = 'Bài viết';
-  let category = 'Tin tức';
-  let sourceName = 'Tổng Đài Địa Ốc';
-  let sourceUrl: string | null = null;
-  let date = new Date().toISOString().slice(0, 10);
-  let bodyHtml: string | null = null;
-  let plainContent: string | null = null;
-  let imageUrl: string | null = null;
-  let bankName: string | null = null;
-  let found = false;
+  const [article, feed] = await Promise.all([
+    loadArticle(slug),
+    getBlogFeed(9).catch(() => [] as Awaited<ReturnType<typeof getBlogFeed>>),
+  ]);
 
-  try {
-    const blog = await getBlogFeedDetail(slug);
-    found = true;
-    title = blog.title;
-    bodyHtml = blog.bodyHtml ?? null;
-    imageUrl = blog.imageUrl ?? null;
-    sourceName = blog.sourceName;
-    sourceUrl = blog.sourceUrl;
-    category = blog.category === 'kinh-te' ? 'Kinh tế' : 'Bất động sản';
-    if (blog.publishedAt) date = blog.publishedAt;
-  } catch {
-    try {
-      const content = await getContent(slug);
-      found = true;
-      title = content.title;
-      bodyHtml = content.bodyHtml ?? null;
-      bankName = content.bankName ?? null;
-      imageUrl = content.imageUrl ?? null;
-      if (content.contentType === 'mortgage') category = 'Hỗ trợ vay';
-    } catch {
-      const legacy = legacyArticles[slug];
-      if (legacy) {
-        found = true;
-        title = legacy.title;
-        sourceName = legacy.author;
-        date = legacy.date;
-        category = legacy.category;
-        plainContent = legacy.content;
-      }
-    }
-  }
+  const {
+    title,
+    category,
+    sourceName,
+    sourceUrl,
+    date,
+    bodyHtml,
+    plainContent,
+    imageUrl,
+    bankName,
+    found,
+  } = article;
 
-  let related: { slug: string; title: string; category: string }[] = [];
-  try {
-    const feed = await getBlogFeed(9);
-    related = feed
-      .filter((i) => i.slug !== slug)
-      .slice(0, 3)
-      .map((i) => ({
-        slug: i.slug,
-        title: i.title,
-        category: i.sourceName,
-      }));
-  } catch {
-    related = [];
-  }
+  const related = feed
+    .filter((i) => i.slug !== slug)
+    .slice(0, 3)
+    .map((i) => ({
+      slug: i.slug,
+      title: i.title,
+      category: i.sourceName,
+    }));
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
