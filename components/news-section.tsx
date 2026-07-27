@@ -3,27 +3,9 @@
 import { ChevronRight, CalendarDays, Newspaper } from 'lucide-react';
 import Link from 'next/link';
 import { useState, type ReactNode } from 'react';
-import type { BlogFeedItem } from '@/lib/api';
+import { BLOG_PLACEHOLDER, type BlogItem } from '@/lib/blog';
 
-export interface BlogItem {
-  id: string;
-  title: string;
-  date: string;
-  image: string;
-  category: string;
-  source: string;
-  excerpt?: string;
-  href?: string;
-  external?: boolean;
-}
-
-const BLOG_PLACEHOLDER =
-  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop';
-
-const CATEGORY_LABELS: Record<string, string> = {
-  'bat-dong-san': 'Bất động sản',
-  'kinh-te': 'Kinh tế',
-};
+export type { BlogItem } from '@/lib/blog';
 
 /** Mock — fallback khi API blog-feed lỗi / rỗng. */
 export const blogItems: BlogItem[] = [
@@ -94,28 +76,6 @@ export const blogItems: BlogItem[] = [
   },
 ];
 
-export function mapBlogFeedToItems(feed: BlogFeedItem[]): BlogItem[] {
-  return feed.map((item) => {
-    const published = item.publishedAt ? new Date(item.publishedAt) : null;
-    const date =
-      published && !Number.isNaN(published.getTime())
-        ? published.toLocaleDateString('vi-VN')
-        : '';
-    const catKey = (item.category || 'bat-dong-san').toLowerCase();
-    return {
-      id: item.id,
-      title: item.title,
-      date,
-      image: item.imageUrl || BLOG_PLACEHOLDER,
-      category: CATEGORY_LABELS[catKey] || item.category || 'Bất động sản',
-      source: item.sourceName,
-      excerpt: item.excerpt || undefined,
-      href: item.sourceUrl,
-      external: /^https?:\/\//i.test(item.sourceUrl),
-    };
-  });
-}
-
 function BlogCoverImage({
   src,
   alt,
@@ -162,12 +122,7 @@ function BlogLink({
   const href = item.href ?? '/tin-tuc';
   if (item.external) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-      >
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
         {children}
       </a>
     );

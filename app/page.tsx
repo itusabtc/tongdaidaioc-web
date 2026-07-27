@@ -1,7 +1,8 @@
 import Header from '@/components/header';
 import HeroSearch from '@/components/hero-search';
 import FeaturesSection from '@/components/features-section';
-import NewsSection, { mapBlogFeedToItems, type BlogItem } from '@/components/news-section';
+import NewsSection from '@/components/news-section';
+import { mapBlogFeedToItems, type BlogItem } from '@/lib/blog';
 import LocationBrowseSection from '@/components/location-browse-section';
 import Footer from '@/components/footer';
 import BackToTop from '@/components/back-to-top';
@@ -65,8 +66,8 @@ async function HomePageContent() {
     if (feed.length > 0) {
       blogItems = mapBlogFeedToItems(feed);
     }
-  } catch {
-    console.error('Failed to fetch blog feed, using mock data');
+  } catch (error) {
+    console.error('Failed to fetch blog feed, using mock data', error);
   }
 
   return (
