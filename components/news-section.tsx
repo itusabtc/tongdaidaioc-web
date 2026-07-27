@@ -2,7 +2,8 @@
 
 import { ChevronRight, CalendarDays, Newspaper } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
+import type { BlogFeedItem } from '@/lib/api';
 
 export interface BlogItem {
   id: string;
@@ -13,12 +14,18 @@ export interface BlogItem {
   source: string;
   excerpt?: string;
   href?: string;
+  external?: boolean;
 }
 
-/** Mock — bước 2: thay bằng API crawl tin BĐS từ báo. Chỉ dùng URL Unsplash đã kiểm tra 200. */
 const BLOG_PLACEHOLDER =
   'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop';
 
+const CATEGORY_LABELS: Record<string, string> = {
+  'bat-dong-san': 'Bất động sản',
+  'kinh-te': 'Kinh tế',
+};
+
+/** Mock — fallback khi API blog-feed lỗi / rỗng. */
 export const blogItems: BlogItem[] = [
   {
     id: '1',
@@ -87,6 +94,28 @@ export const blogItems: BlogItem[] = [
   },
 ];
 
+export function mapBlogFeedToItems(feed: BlogFeedItem[]): BlogItem[] {
+  return feed.map((item) => {
+    const published = item.publishedAt ? new Date(item.publishedAt) : null;
+    const date =
+      published && !Number.isNaN(published.getTime())
+        ? published.toLocaleDateString('vi-VN')
+        : '';
+    const catKey = (item.category || 'bat-dong-san').toLowerCase();
+    return {
+      id: item.id,
+      title: item.title,
+      date,
+      image: item.imageUrl || BLOG_PLACEHOLDER,
+      category: CATEGORY_LABELS[catKey] || item.category || 'Bất động sản',
+      source: item.sourceName,
+      excerpt: item.excerpt || undefined,
+      href: item.sourceUrl,
+      external: /^https?:\/\//i.test(item.sourceUrl),
+    };
+  });
+}
+
 function BlogCoverImage({
   src,
   alt,
@@ -121,6 +150,35 @@ function SourceBadge({ source }: { source: string }) {
   );
 }
 
+function BlogLink({
+  item,
+  className,
+  children,
+}: {
+  item: BlogItem;
+  className?: string;
+  children: ReactNode;
+}) {
+  const href = item.href ?? '/tin-tuc';
+  if (item.external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 function BlogCard({
   item,
   variant = 'compact',
@@ -128,11 +186,9 @@ function BlogCard({
   item: BlogItem;
   variant?: 'featured' | 'side' | 'compact';
 }) {
-  const href = item.href ?? '/tin-tuc';
-
   if (variant === 'featured') {
     return (
-      <Link href={href} className="group block h-full">
+      <BlogLink item={item} className="group block h-full">
         <article className="h-full flex flex-col">
           <div className="relative overflow-hidden rounded-xl bg-gray-200 aspect-[16/10] mb-4">
             <BlogCoverImage
@@ -146,10 +202,12 @@ function BlogCard({
           </div>
           <div className="flex items-center gap-2 mb-2">
             <SourceBadge source={item.source} />
-            <span className="flex items-center gap-1 text-xs text-gray-500">
-              <CalendarDays size={12} />
-              {item.date}
-            </span>
+            {item.date && (
+              <span className="flex items-center gap-1 text-xs text-gray-500">
+                <CalendarDays size={12} />
+                {item.date}
+              </span>
+            )}
           </div>
           <h3 className="font-bold text-xl text-gray-900 mb-2 line-clamp-3 group-hover:text-primary transition">
             {item.title}
@@ -158,13 +216,13 @@ function BlogCard({
             <p className="text-gray-600 text-sm line-clamp-2 flex-1">{item.excerpt}</p>
           )}
         </article>
-      </Link>
+      </BlogLink>
     );
   }
 
   if (variant === 'side') {
     return (
-      <Link href={href} className="group flex gap-4 items-start">
+      <BlogLink item={item} className="group flex gap-4 items-start">
         <div className="w-32 h-24 md:w-36 md:h-28 rounded-lg overflow-hidden bg-gray-200 shrink-0">
           <BlogCoverImage
             src={item.image}
@@ -182,17 +240,19 @@ function BlogCard({
           <h3 className="font-semibold text-gray-900 text-sm md:text-base line-clamp-2 group-hover:text-primary transition mb-1">
             {item.title}
           </h3>
-          <span className="text-xs text-gray-500 flex items-center gap-1">
-            <CalendarDays size={12} />
-            {item.date}
-          </span>
+          {item.date && (
+            <span className="text-xs text-gray-500 flex items-center gap-1">
+              <CalendarDays size={12} />
+              {item.date}
+            </span>
+          )}
         </div>
-      </Link>
+      </BlogLink>
     );
   }
 
   return (
-    <Link href={href} className="group block">
+    <BlogLink item={item} className="group block">
       <article className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg hover:border-primary/20 transition h-full flex flex-col">
         <div className="relative aspect-[16/10] bg-gray-200 overflow-hidden">
           <BlogCoverImage
@@ -214,14 +274,17 @@ function BlogCard({
           </h3>
         </div>
       </article>
-    </Link>
+    </BlogLink>
   );
 }
 
-export default function NewsSection() {
-  const [featured, ...rest] = blogItems;
+export default function NewsSection({ items }: { items?: BlogItem[] }) {
+  const list = items && items.length > 0 ? items : blogItems;
+  const [featured, ...rest] = list;
   const sideItems = rest.slice(0, 2);
   const gridItems = rest.slice(2, 8);
+
+  if (!featured) return null;
 
   return (
     <section className="py-10 md:py-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
@@ -245,7 +308,6 @@ export default function NewsSection() {
           </Link>
         </div>
 
-        {/* Top: featured + 2 side articles */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 mb-8">
           <div className="lg:col-span-3">
             <BlogCard item={featured} variant="featured" />
@@ -262,7 +324,6 @@ export default function NewsSection() {
           </div>
         </div>
 
-        {/* Grid: 6 compact cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {gridItems.map((item) => (
             <BlogCard key={item.id} item={item} variant="compact" />

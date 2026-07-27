@@ -1,7 +1,7 @@
 import Header from '@/components/header';
 import HeroSearch from '@/components/hero-search';
 import FeaturesSection from '@/components/features-section';
-import NewsSection from '@/components/news-section';
+import NewsSection, { mapBlogFeedToItems, type BlogItem } from '@/components/news-section';
 import LocationBrowseSection from '@/components/location-browse-section';
 import Footer from '@/components/footer';
 import BackToTop from '@/components/back-to-top';
@@ -10,7 +10,7 @@ import FeaturedBrokersSection from '@/components/brokers/featured-brokers-sectio
 import BrokerUnifiedSection from '@/components/brokers/broker-unified-section';
 import HomeownerAISection from '@/components/homeowner/homeowner-ai-section';
 import ToolsAndMortgageSection from '@/components/home/tools-and-mortgage-section';
-import { getStats, getListings, getFeaturedUtilities, getMortgageArticles } from '@/lib/api';
+import { getStats, getListings, getFeaturedUtilities, getMortgageArticles, getBlogFeed } from '@/lib/api';
 import { mockListings } from '@/lib/mock/listings';
 import { featuredBrokers } from '@/lib/mock/featured-brokers';
 import { featuredUtilities as mockUtilities } from '@/lib/mock/featured-utilities';
@@ -20,17 +20,17 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 async function HomePageContent() {
-  // Try to fetch from API, fallback to mock data
   let statsCount = '12,340';
   let saleListings = mockListings.filter(l => l.listingType === 'sale');
   let rentListings = mockListings.filter(l => l.listingType === 'rent');
   let utilities = mockUtilities;
   let mortgageArticles = mockMortgage;
+  let blogItems: BlogItem[] | undefined;
 
   try {
     const stats = await getStats();
     statsCount = stats.activeListingCount.toLocaleString('vi-VN');
-  } catch (error) {
+  } catch {
     console.error('Failed to fetch stats, using mock data');
   }
 
@@ -39,7 +39,7 @@ async function HomePageContent() {
     if (saleData.items.length > 0) {
       saleListings = saleData.items;
     }
-  } catch (error) {
+  } catch {
     console.error('Failed to fetch sale listings, using mock data');
   }
 
@@ -48,7 +48,7 @@ async function HomePageContent() {
     if (rentData.items.length > 0) {
       rentListings = rentData.items;
     }
-  } catch (error) {
+  } catch {
     console.error('Failed to fetch rent listings, using mock data');
   }
 
@@ -56,8 +56,17 @@ async function HomePageContent() {
     const [u, m] = await Promise.all([getFeaturedUtilities(), getMortgageArticles()]);
     if (u.length > 0) utilities = u;
     if (m.length > 0) mortgageArticles = m;
-  } catch (error) {
+  } catch {
     console.error('Failed to fetch home content, using mock data');
+  }
+
+  try {
+    const feed = await getBlogFeed(8);
+    if (feed.length > 0) {
+      blogItems = mapBlogFeedToItems(feed);
+    }
+  } catch {
+    console.error('Failed to fetch blog feed, using mock data');
   }
 
   return (
@@ -66,12 +75,10 @@ async function HomePageContent() {
         <Header />
         <HeroSearch statsCount={statsCount} />
       </div>
-      
+
       <div>
-        {/* Features Section */}
         <FeaturesSection />
 
-        {/* Latest Listings - Sale Section */}
         <LatestListingsSection
           title="Nhà đất bán mới nhất"
           listings={saleListings}
@@ -79,7 +86,6 @@ async function HomePageContent() {
           className="!pt-4 md:!pt-6"
         />
 
-        {/* Latest Listings - Rent Section */}
         <LatestListingsSection
           title="Nhà đất cho thuê mới nhất"
           listings={rentListings}
@@ -87,20 +93,15 @@ async function HomePageContent() {
           className="bg-gray-50"
         />
 
-        {/* Featured Brokers Section */}
         <FeaturedBrokersSection brokers={featuredBrokers} />
 
-        {/* Broker CRM + AI — trước chủ nhà */}
         <BrokerUnifiedSection />
 
-        {/* Homeowner AI Section */}
         <HomeownerAISection />
 
-        {/* Tools and Mortgage Section */}
         <ToolsAndMortgageSection utilities={utilities} articles={mortgageArticles} />
 
-        {/* Blogs — tin BĐS tổng hợp (bước 2: crawl báo) */}
-        <NewsSection />
+        <NewsSection items={blogItems} />
 
         <LocationBrowseSection />
 

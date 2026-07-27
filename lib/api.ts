@@ -338,6 +338,22 @@ export async function getMortgageArticles(): Promise<MortgageArticle[]> {
   return apiFetch<MortgageArticle[]>('/home/mortgage-articles');
 }
 
+/** Tin báo BĐS từ RSS — link ngoài (homepage Blogs). */
+export interface BlogFeedItem {
+  id: string;
+  title: string;
+  excerpt: string;
+  imageUrl?: string | null;
+  publishedAt?: string | null;
+  category?: string | null;
+  sourceName: string;
+  sourceUrl: string;
+}
+
+export async function getBlogFeed(limit = 8): Promise<BlogFeedItem[]> {
+  return apiFetch<BlogFeedItem[]>(`/home/blog-feed?limit=${limit}`);
+}
+
 export async function getContent(slug: string): Promise<SiteContentDetail> {
   return apiFetch<SiteContentDetail>(`/content/${slug}`);
 }
